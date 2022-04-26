@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="4.0" type="plugin" group="system" method="upgrade">
+	<name>plg_system_cgstyle</name>
+	<author>ConseilGouz</author>
+	<creationDate>September 2021</creationDate>
+	<copyright>(C)2021 ConseilGouz. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
+	<authorUrl>www.conseilgouz.com</authorUrl>
+	<version>2.0.0</version>
+	<description>PLG_SYSTEM_CGSTYLE_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="cgstyle">cgstyle.php</filename>
+        <filename>cgstyle.xml</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_system_cgstyle.ini</language>
+		<language tag="en-GB">language/en-GB/plg_system_cgstyle.sys.ini</language>
+		<language tag="fr-FR">language/fr-FR/plg_system_cgstyle.ini</language>
+		<language tag="fr-FR">language/fr-FR/plg_system_cgstyle.sys.ini</language>
+	</languages>
+	<config>
+       <fields name="params" >
+            <fieldset name="basic">
+			</fieldset>
+        </fields>
+		</config>
+    <updateservers>
+        <server type="plugin" folder="system" priority="1" name="cgstyle">https://www.conseilgouz.com/updates/plg_system_cgstyle_update.xml</server>
+    </updateservers>
+</extension>

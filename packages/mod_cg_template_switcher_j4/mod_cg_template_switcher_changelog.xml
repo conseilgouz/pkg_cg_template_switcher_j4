@@ -1,0 +1,24 @@
+<changelogs>
+	<changelog>
+		<element>mod_cg_template_switcher</element>
+		<type>Module</type>
+		<version>2.0.1</version>
+        <note>
+            <item>Update : 04/10/2021</item>
+        </note>
+        <addition>
+            <item>Joomla 4 compatibility</item>
+        </addition>
+	</changelog>
+	<changelog>
+		<element>mod_cg_template_switcher</element>
+		<type>Module</type>
+		<version>2.0.0</version>
+        <note>
+            <item>Update : 21/09/2021</item>
+        </note>
+        <addition>
+            <item>Joomla 4 compatibility</item>
+        </addition>
+	</changelog>
+</changelogs>

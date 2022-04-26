@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="3.10" method="upgrade">
+ <name>CG Template Switcher</name>
+ <creationDate>October 2021</creationDate>
+ <packagename>CG Template Switcher</packagename>
+ <license>https://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+ <author>ConseilGouz</author>
+ <authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
+ <authorUrl>www.conseilgouz.com</authorUrl>
+ <version>2.0.1</version>
+ <url>https://www.conseilgouz.com/</url>
+ <packager>ConseilGouz</packager>
+ <description>Package CG Template Switcher</description>
+ <scriptfile>script.php</scriptfile>
+<files folder="packages">
+   <file type="module" id="CG Template Switcher" client="site">mod_cg_template_switcher_j4.zip</file>
+   <file type="plugin" id="cgstyle" group="system" client="site">plg_system_cgstyle_j4.zip</file>
+ </files>
+ <changelogurl>https://www.conseilgouz.com/updates/cg_template_switcher_changelog.xml</changelogurl>
+ <updateservers>
+	<server type="extension" name="CG Template Switcher" priority="1">https://www.conseilgouz.com/updates/pkg_cg_template_switcher_update.xml</server>
+ </updateservers>
+</extension>

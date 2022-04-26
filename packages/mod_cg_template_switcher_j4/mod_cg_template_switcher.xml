@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<extension version="4.0" type="module" method="upgrade" client="site">
+	<name>CG Template Switcher</name>
+	<author>ConseilGouz</author>
+	<creationDate>October 2021</creationDate>
+	<copyright>Copyright (C) 2021 ConseilGouz. All rights reserved</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2</license>
+	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
+	<authorUrl>www.conseilgouz.com</authorUrl>
+	<version>2.0.1</version>
+	<description>CG_XML_DESCRIPTION</description>
+	<namespace path="src">ConseilGouz\Module\CGTemplateSwitcher</namespace>
+	<scriptfile>script.php</scriptfile>
+	<changelogurl>https://www.conseilgouz.com/updates/mod_cg_template_switcher_changelog.xml</changelogurl>
+	<files>
+		<filename module="mod_cg_template_switcher">mod_cg_template_switcher.php</filename>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+		<folder>src</folder>
+	</files>
+	<media destination="mod_cg_template_switcher" folder="media">
+		<folder>js</folder>
+		<folder>fancybox</folder>
+		<filename>index.html</filename>
+	</media>
+	<languages>
+		<language tag="fr-FR">language/fr-FR/mod_cg_template_switcher.ini</language>
+		<language tag="fr-FR">language/fr-FR/mod_cg_template_switcher.sys.ini</language>
+		<language tag="en-GB">language/en-GB/mod_cg_template_switcher.ini</language>
+		<language tag="en-GB">language/en-GB/mod_cg_template_switcher.sys.ini</language>
+	</languages>
+	
+	<config>
+	<fields name="params" >
+		<fieldset name="basic" addruleprefix="ConseilGouz\Module\CGTemplateSwitcher\Site\Rule">
+			<field name="templatesall" 	type="radio" class="btn-group btn-group-yesno"	default="true" 
+				label="CG_TEMPLATES_ALL" description="CG_TEMPLATES_ALLDESC"
+				validate="templates"
+				>
+				<option value="true">JYES</option>
+				<option value="false">JNO</option>
+			</field>		
+			<field showon="templatesall:false" name="templates" type="templatestyle" label="Templates" description="CG_TEMPLATESDESC" multiple="multiple"/>
+			<field name="showpreview" 	type="radio" class="btn-group btn-group-yesno"	default="true" 
+				label="CG_STYLE_PREVIEW" description="CG_STYLE_PREVIEWDESC"
+				>
+				<option value="true">JYES</option>
+				<option value="false">JNO</option>
+			</field>	
+			<field name="autoswitch" 	type="radio" class="btn-group btn-group-yesno"	default="false" 
+				label="CG_STYLE_AUTO" description="CG_STYLE_AUTODESC"
+				>
+				<option value="true">JYES</option>
+				<option value="false">JNO</option>
+			</field>	
+			<field  name="cookie_duration" type="text" default="0" label="COOKIE_DURATION" description="COOKIE_DURATIONDESC" size="3" maxlength="3"/>
+			
+		    <field type="note" name="cg_note1" label="CG_NOTE1" heading="p" />
+			<field name="css" type="textarea" label="CG_CSS" description="CG_CSS_DESC" cols="40" rows="4" filter="raw" 
+				default="#CG_TS_Select {} #CG_TS_Img{max-width:100%} #CG_TS_OKBtn{} #CG_TS_CancelBtn{}"
+			/>	
+
+		</fieldset>
+		<fieldset name="advanced">
+		<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+		</fieldset>
+	</fields>
+	</config>
+	<updateservers>
+	<server type="extension" name="CG Template Switcher" priority="1">https://www.conseilgouz.com/updates/mod_cg_template_switcher_update.xml</server>
+	</updateservers>
+	
+</extension>
