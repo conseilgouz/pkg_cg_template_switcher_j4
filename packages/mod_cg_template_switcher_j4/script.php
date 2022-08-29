@@ -1,9 +1,9 @@
 <?php
 /**
-* CG Scroll Module  - Joomla 4.0.0 Module 
-* Version			: 4.1.0
-* Package			: CG Scroll
-* copyright 		: Copyright (C) 2021 ConseilGouz. All rights reserved.
+* CG Template Switcher package  - Joomla 4 Module 
+* Version			: 2.0.2
+* Package			: CG Template Switcher
+* copyright 		: Copyright (C) 2022 ConseilGouz. All rights reserved.
 * license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
 */
 // No direct access to this file
@@ -14,13 +14,11 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Version;
 use Joomla\CMS\Filesystem\File;
 
-class mod_cg_scrollInstallerScript
+class mod_cg_template_switcherInstallerScript
 {
-	private $min_joomla_version      = '3.9.0';
-	private $min_php_version         = '7.2';
-	private $name                    = 'CG Scroll';
-	private $exttype                 = 'module';
-	private $extname                 = 'cg_scroll';
+	private $min_joomla_version      = '3.10.0';
+	private $min_php_version         = '7.4';
+	private $extname                 = 'cg_template_switcher';
 	private $previous_version        = '';
 	private $dir           = null;
 	private $installerName = 'cg_flipinstaller';

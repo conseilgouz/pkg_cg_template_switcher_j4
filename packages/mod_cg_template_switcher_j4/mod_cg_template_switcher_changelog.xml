@@ -2,6 +2,17 @@
 	<changelog>
 		<element>mod_cg_template_switcher</element>
 		<type>Module</type>
+		<version>2.0.2</version>
+        <note>
+            <item>Update : 29/08/2022</item>
+        </note>
+        <fix>
+            <item>Uninstall package</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>mod_cg_template_switcher</element>
+		<type>Module</type>
 		<version>2.0.1</version>
         <note>
             <item>Update : 04/10/2021</item>

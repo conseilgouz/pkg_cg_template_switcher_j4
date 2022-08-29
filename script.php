@@ -1,9 +1,9 @@
 <?php
 /**
-* CG Template Switcher Module  - Joomla 4.0.0 Module 
-* Version			: 2.0.0
+* CG Template Switcher package  - Joomla 4 Module 
+* Version			: 2.0.2
 * Package			: CG Template Switcher
-* copyright 		: Copyright (C) 2021 ConseilGouz. All rights reserved.
+* copyright 		: Copyright (C) 2022 ConseilGouz. All rights reserved.
 * license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
 */
 // No direct access to this file
@@ -17,14 +17,30 @@ class pkg_CGTemplateSwitcherInstallerScript
 {
 	private $min_joomla_version      = '3.10.0';
 	private $min_php_version         = '7.4';
-	private $name                    = 'CG Template Switcher';
-	private $exttype                 = 'module';
 	private $extname                 = 'cg_template_switcher';
 	private $dir           = null;
 	public function __construct()
 	{
 		$this->dir = __DIR__;
 	}
+   /**
+    *
+    * Function to run when un-installing the component
+    * @return void
+    */
+   public function uninstall($parent) {
+		// remove old package path
+		$f = JPATH_MANIFESTS . '/packages/CG Template Switcher';
+		if (!@file_exists($f) || !is_dir($f) || is_link($f)) {
+			return;
+		}
+		Folder::delete($f);
+		// remove old package xml
+		$f = JPATH_MANIFESTS . '/packages/pkg_cg_template_switcher.xml';
+		if (@is_file($f)) {
+			File::delete($f);
+		}
+   }
 
     function preflight($type, $parent)
     {
