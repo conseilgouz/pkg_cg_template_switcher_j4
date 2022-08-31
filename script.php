@@ -1,7 +1,7 @@
 <?php
 /**
 * CG Template Switcher package  - Joomla 4 Module 
-* Version			: 2.0.2
+* Version			: 2.0.3
 * Package			: CG Template Switcher
 * copyright 		: Copyright (C) 2022 ConseilGouz. All rights reserved.
 * license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -29,17 +29,21 @@ class pkg_CGTemplateSwitcherInstallerScript
     * @return void
     */
    public function uninstall($parent) {
+		// remove old package xml
+		$f = JPATH_MANIFESTS . '/packages/pkg_cg_template_switcher.xml';
+		if (@is_file($f)) {
+			File::delete($f);
+		}
+		$f = JPATH_MANIFESTS . '/packages/pkg_cgtemplateswitcher.xml';
+		if (@is_file($f)) {
+			File::delete($f);
+		}
 		// remove old package path
 		$f = JPATH_MANIFESTS . '/packages/CG Template Switcher';
 		if (!@file_exists($f) || !is_dir($f) || is_link($f)) {
 			return;
 		}
 		Folder::delete($f);
-		// remove old package xml
-		$f = JPATH_MANIFESTS . '/packages/pkg_cg_template_switcher.xml';
-		if (@is_file($f)) {
-			File::delete($f);
-		}
    }
 
     function preflight($type, $parent)
@@ -110,6 +114,10 @@ class pkg_CGTemplateSwitcherInstallerScript
 				}
 			}
 		}
+		// Joomla 3.10 : uppercas manifest file name
+		$f = JPATH_MANIFESTS . '/packages/pkg_cgtemplateswitcher.xml';
+		$u = JPATH_MANIFESTS . '/packages/pkg_CGTemplateSwitcher.xml';
+		File::copy($f,$u);
 	}
 	// enable CGStyle plugin
 	private function postinstall_enable_plugin() {

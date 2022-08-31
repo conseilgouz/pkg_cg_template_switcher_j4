@@ -2,6 +2,18 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.0.3</version>
+        <note>
+            <item>Update : 31/08/2022</item>
+        </note>
+        <fix>
+            <item>uninstall : handel uppercase manifest file names</item>
+            <item>uninstall : remove unnecessary files</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.0.2</version>
         <note>
             <item>Update : 29/08/2022</item>
