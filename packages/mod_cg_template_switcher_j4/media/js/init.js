@@ -1,8 +1,8 @@
 /**
  * @package CG template switcher Module
- * @version 2.0.1 
+ * @version 2.0.5 
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * @copyright (c) 2021 ConseilGouz. All Rights Reserved.
+ * @copyright (c) 2025 ConseilGouz. All Rights Reserved.
  * @author ConseilGouz 
  * 
  **/
@@ -63,9 +63,7 @@ function go_switch(options) {
 
 function CG_TS_ImageShow(s) {
 	if (CG_TS_Images[s]) {
-		document.getElementById("CG_TS_Switcher").innerHTML = decodeURIComponent("%3C")+'a href="'+ CG_TS_Images[s].preview +'" class="fancybox"'+decodeURIComponent("%3E")+
-		decodeURIComponent("%3C")+'img src="'+CG_TS_Images[s].preview+'" id="CG_TS_Img"'+decodeURIComponent("%3E")+
-		decodeURIComponent("%3C")+'/a'+decodeURIComponent("%3E");
+		document.getElementById("CG_TS_Switcher").innerHTML = decodeURIComponent("%3C")+'img src="'+CG_TS_Images[s].preview+'" id="CG_TS_Img"'+decodeURIComponent("%3E");
 	} else {
 		document.getElementById("CG_TS_Switcher").innerHTML = options.noimage;
 	}

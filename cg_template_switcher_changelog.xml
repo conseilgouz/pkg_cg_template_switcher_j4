@@ -2,6 +2,19 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.0.5</version>
+        <note>
+            <item>Update : 09/09/2022</item>
+        </note>
+        <fix>
+            <item>Autoselect current template</item>
+            <item>Display thumbnails from media directory</item>
+            <item>No click on thumbnail</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.0.4</version>
         <note>
             <item>Update : 08/09/2022</item>

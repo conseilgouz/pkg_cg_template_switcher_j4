@@ -1,9 +1,9 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.0.1 
+ * @version 2.0.5 
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * @copyright (c) 2021 ConseilGouz. All Rights Reserved.
+ * @copyright (c) 2022 ConseilGouz. All Rights Reserved.
  * @author ConseilGouz 
  */
 defined('_JEXEC') or die;
