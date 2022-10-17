@@ -1,12 +1,9 @@
 <?php
 /**
 * CG template switcher Module
-* Version			: 1.0.10
-* Package			: Joomla 3.7.x
-* copyright 		: Copyright (C) 2018 ConseilGouz. All rights reserved.
+* Version			: 2.0.6
+* copyright 		: Copyright (C) 2022 ConseilGouz. All rights reserved.
 * license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
-* Updated on        : March, 2018
-* Version 01.0.10   : CSP Compliance
 */
 namespace ConseilGouz\Module\CGTemplateSwitcher\Site\Rule;
 defined( '_JEXEC' ) or die( 'Restricted access' );

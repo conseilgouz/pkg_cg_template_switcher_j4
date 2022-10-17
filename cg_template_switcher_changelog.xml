@@ -2,6 +2,18 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.0.6</version>
+        <note>
+            <item>Update : 17/10/2022</item>
+        </note>
+        <fix>
+            <item>Joomla 3.10 compatibility</item>
+            <item>Update/Changelog files on github</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.0.5</version>
         <note>
             <item>Update : 09/09/2022</item>

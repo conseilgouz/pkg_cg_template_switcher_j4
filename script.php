@@ -1,7 +1,7 @@
 <?php
 /**
 * CG Template Switcher package  - Joomla 4 Module 
-* Version			: 2.0.3
+* Version			: 2.0.6
 * Package			: CG Template Switcher
 * copyright 		: Copyright (C) 2022 ConseilGouz. All rights reserved.
 * license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
@@ -118,6 +118,26 @@ class pkg_CGTemplateSwitcherInstallerScript
 		$f = JPATH_MANIFESTS . '/packages/pkg_cgtemplateswitcher.xml';
 		$u = JPATH_MANIFESTS . '/packages/pkg_CGTemplateSwitcher.xml';
 		File::copy($f,$u);
+		
+		// remove obsolete update sites
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->delete('#__update_sites')
+			->where($db->quoteName('location') . ' like "%432473037d.url-de-test.ws/%"');
+		$db->setQuery($query);
+		$db->execute();
+		// Simple Isotope is now on Github
+		$query = $db->getQuery(true)
+			->delete('#__update_sites')
+			->where($db->quoteName('location') . ' like "%conseilgouz.com/updates/mod_cg_template%"');
+		$db->setQuery($query);
+		$db->execute();
+		$query = $db->getQuery(true)
+			->delete('#__update_sites')
+			->where($db->quoteName('location') . ' like "%conseilgouz.com/updates/pkg_cg_template%"');
+		$db->setQuery($query);
+		$db->execute();
+		
 	}
 	// enable CGStyle plugin
 	private function postinstall_enable_plugin() {

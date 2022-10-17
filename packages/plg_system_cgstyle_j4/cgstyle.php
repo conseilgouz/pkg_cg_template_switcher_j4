@@ -1,7 +1,7 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.0.4
+ * @version 2.0.6
  * @subpackage  system.cg_style
  *
  * @copyright   Copyright (C) 2022 Conseilgouz. All rights reserved.
@@ -12,6 +12,8 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Version;
+
 class PlgSystemCGStyle extends CMSPlugin
 {
 	public function onAfterRoute() {
@@ -30,7 +32,13 @@ class PlgSystemCGStyle extends CMSPlugin
 			$db->setQuery($query);
 			$style = $db->loadObject();
 			if ($style != null) {
-				$app->setTemplate( $style); // 4.0 : expect an object
+				$j = new Version();
+				$version=substr($j->getShortVersion(), 0,1); 
+				if ($version == "4") { // Joomla 4.0
+					$app->setTemplate( $style);
+				}else { //  Joomla 3.10
+					$app->setTemplate( $style->template, $style->params );
+				}
 			}
 		}
     }
