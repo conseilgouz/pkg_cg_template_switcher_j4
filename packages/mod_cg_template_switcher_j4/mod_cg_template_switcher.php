@@ -22,8 +22,6 @@ if (!PluginHelper::isEnabled('system', 'cgstyle')) {
 $document 		= Factory::getDocument();
 $modulefield	= ''.JURI::base(true).'/media/mod_cg_template_switcher/';
 
-$document->addStyleSheet($modulefield .'fancybox/jquery.fancybox.css');
-$document->addScript($modulefield .'fancybox/jquery.fancybox.pack.js');
 $document->addStyleDeclaration($params->get('css','')); 
 
 $templates =  CGTemplateSwitcherHelper::getTemplates($params);

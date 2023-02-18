@@ -1,9 +1,9 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.0.5
+ * @version 2.0.7
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * @copyright (c) 2022 ConseilGouz. All Rights Reserved.
+ * @copyright (c) 2023 ConseilGouz. All Rights Reserved.
  * @author ConseilGouz 
  */
 namespace ConseilGouz\Module\CGTemplateSwitcher\Site\Helper;
@@ -86,31 +86,6 @@ class CGTemplateSwitcherHelper
 		$db->setQuery($query);
 		$items= $db->loadObjectList();
 		return $items;
-	}
-// AJAX Request 	
-	public static function getAjax() {
-        $input = Factory::getApplication()->input;
-		$params = new Registry($module->params);  		
-        $output = '';
-		if ($input->get('data') == "param") {
-			return self::getParams($params);
-		}
-		return false;
-	}
-	private static function getParams($params) {
-		$templates =  self::getTemplates($params);
-		$templates_js = array();
-		if ($params->get('showpreview', 'true') == 'true') {		
-			foreach ($templates->images as $template => $image) { 
-			$arr['width'] =  $image->width;
-			$arr['height'] = $image->height;
-			$arr['src'] = $image->src;
-			$arr['preview'] = $image->preview;
-			$templates_js[$template] = $arr;
-			}
-		}
-		$ret = '{"cookie_duration":"'.$params->get('cookie_duration', 0).'","showpreview":"'.$params->get('showpreview', 'true').'","autoswitch":"'.$params->get('autoswitch', 'false').'","noimage":"'. JText::_('NOIMAGE').'","templates":'.json_encode($templates_js).'}';
-		return $ret;
 	}
 }
 ?>

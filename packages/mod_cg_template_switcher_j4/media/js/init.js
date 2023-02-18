@@ -1,47 +1,37 @@
 /**
  * @package CG template switcher Module
- * @version 2.0.5 
+ * @version 2.0.7 
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * @copyright (c) 2025 ConseilGouz. All Rights Reserved.
+ * @copyright (c) 2023 ConseilGouz. All Rights Reserved.
  * @author ConseilGouz 
  * 
  **/
 var options;
 var CG_TS_Images = new Array();
-jQuery(document).ready(function($) {
+document.addEventListener('DOMContentLoaded', function() {
 	if (typeof Joomla === 'undefined' || typeof Joomla.getOptions === 'undefined') {
 		console.error('Joomla.getOptions not found!\nThe Joomla core.js file is not being loaded.');
+		return;
 	}
 	options = Joomla.getOptions('mod_cg_template_switcher');
-	if (typeof options === 'undefined' ) { // cache Joomla problem
-		request = {
-			'option' : 'com_ajax',
-			'module' : 'cg_template_switcher',
-			'data'   : 'param',
-			'format' : 'raw'
-		};
-		jQuery.ajax({
-			type   : 'POST',
-			data   : request,
-			success: function (response) {
-				options = JSON.parse(response);
-				go_switch(options);
-			}
-		});
-	};
 	if (typeof options !== 'undefined' ) {
 			go_switch(options);
 	}
 });
 function go_switch(options) {
-	jQuery(".fancybox").fancybox();
-	jQuery("#CG_TS_OKBtn").click(function() {
-		sortValue = jQuery("#CG_TS_Select").find(":selected").val();		
+	btn_ok = document.getElementById("CG_TS_OKBtn");
+	if (btn_ok) {
+		btn_ok.addEventListener('click',function() {
+		sortValue = document.querySelector("#CG_TS_Select").selectedOptions[0].value;
 		CG_TS_Cookie(sortValue);
-	});
-	jQuery("#CG_TS_CancelBtn").click(function() {
+		});
+	}
+	btn_cancel = document.getElementById("CG_TS_CancelBtn");
+	if (btn_cancel) {
+		btn_cancel.addEventListener('click',function() {
 		CG_TS_Cookie_Del()
-	});
+		});
+	}
 	if (options.showpreview == 'true') {
 		var templates = options.templates;
 		for (var k in templates) {
@@ -50,8 +40,8 @@ function go_switch(options) {
 			CG_TS_Images[k].preview = templates[k]['preview'];
 		}
 	}
-	jQuery("#CG_TS_Select").on( 'change', function(){
-			sortValue = jQuery("#CG_TS_Select").find(":selected").val();		
+	document.getElementById("CG_TS_Select").addEventListener( 'change', function(){
+			sortValue = this.selectedOptions[0].value;		
 			if (options.showpreview == 'true') {
 				CG_TS_ImageShow(sortValue);
 			}
@@ -73,7 +63,7 @@ function CG_TS_Cookie_Del() {
 	$secure = "";
 	if (window.location.protocol == "https:") $secure="secure;"; 
 	document.cookie = "cg_template=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;samesite=lax;"+$secure;
-	jQuery('#cg_ts_form').submit();
+	document.getElementById('cg_ts_form').submit();
 }
 function CG_TS_Cookie(b) {
 	var expires = "";
@@ -85,6 +75,6 @@ function CG_TS_Cookie(b) {
 	$secure = "";
 	if (window.location.protocol == "https:") $secure="secure;"; 
 	document.cookie = "cg_template="+encodeURIComponent(b)+expires+"; path=/; samesite=lax;"+$secure;
-	jQuery('#cg_ts_form').submit();
+	document.getElementById('cg_ts_form').submit();
 }
 

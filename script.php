@@ -1,9 +1,9 @@
 <?php
 /**
 * CG Template Switcher package  - Joomla 4 Module 
-* Version			: 2.0.6
+* Version			: 2.0.7
 * Package			: CG Template Switcher
-* copyright 		: Copyright (C) 2022 ConseilGouz. All rights reserved.
+* copyright 		: Copyright (C) 2023 ConseilGouz. All rights reserved.
 * license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
 */
 // No direct access to this file
@@ -84,7 +84,15 @@ class pkg_CGTemplateSwitcherInstallerScript
 
 			Folder::delete($f);
 		}
-		$obsloteFiles = [sprintf("%s/modules/mod_%s/helper.php", JPATH_SITE, $this->extname)];
+		// remove fancybox in media
+		$f = JPATH_SITE . '/media/mod_'.$this->extname.'/fancybox';
+		if (@file_exists($f) && is_dir($f)) {
+			Folder::delete($f);
+		}
+		$obsloteFiles = [sprintf("%s/modules/mod_%s/helper.php", JPATH_SITE, $this->extname),
+						 sprintf("%s/modules/mod_%s/script.php", JPATH_SITE, $this->extname),
+						 sprintf("%s/modules/mod_%s/tmpl/lighbox.html", JPATH_SITE, $this->extname),
+						];
 		foreach ($obsloteFiles as $file)
 		{
 			if (@is_file($file))
