@@ -125,8 +125,10 @@ class pkg_CGTemplateSwitcherInstallerScript
 		// Joomla 3.10 : uppercas manifest file name
 		$f = JPATH_MANIFESTS . '/packages/pkg_cgtemplateswitcher.xml';
 		$u = JPATH_MANIFESTS . '/packages/pkg_CGTemplateSwitcher.xml';
-		File::copy($f,$u);
-		
+		try { 
+			File::copy($f,$u);
+		} catch (RuntimeException $e) {
+		}
 		// remove obsolete update sites
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true)
