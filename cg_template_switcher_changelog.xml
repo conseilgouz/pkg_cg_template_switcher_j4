@@ -2,6 +2,17 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.1.2</version>
+        <note>
+            <item>Update : 27/08/2023</item>
+        </note>
+		<fix>
+            <item>Update date error in package</item>
+		</fix>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.1.1</version>
         <note>
             <item>Update : 27/08/2023</item>
