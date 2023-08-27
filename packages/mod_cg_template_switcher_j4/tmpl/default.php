@@ -1,9 +1,9 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.0.5
+ * @version 2.1.0
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * @copyright (c) 2022 ConseilGouz. All Rights Reserved.
+ * @copyright (c) 2023 ConseilGouz. All Rights Reserved.
  * @author ConseilGouz 
  * 
  */
@@ -36,8 +36,8 @@ if (!$curr_template_idx) $curr_template_idx = $curr_template->id;
 		</div>
 		<?php if ($params->get("autoswitch","false") == 'false') { // 01.0.14 : autoswitch?>
 		<div id="CG_TS_LIST" style="padding:6px 0 0 0;border:none;background:none;text-align:center">
-			<input id="CG_TS_OKBtn" class="button" type="button" style="margin:0" value="<?php echo JText::_('CGSELECT'); ?>"/>
-			<input id ="CG_TS_CancelBtn" class="button" type="button" style="margin-left:1em" value="<?php echo JText::_('CGCANCEL'); ?>" title="<?php echo JText::_('CGCANCELDESC'); ?>" />
+			<input id="CG_TS_OKBtn" class="button" type="button" style="margin:0" value="<?php echo Text::_('CGSELECT'); ?>"/>
+			<input id ="CG_TS_CancelBtn" class="button" type="button" style="margin-left:1em" value="<?php echo Text::_('CGCANCEL'); ?>" title="<?php echo Text::_('CGCANCELDESC'); ?>" />
 		</div>
 		<?php } ?>
 	</div>

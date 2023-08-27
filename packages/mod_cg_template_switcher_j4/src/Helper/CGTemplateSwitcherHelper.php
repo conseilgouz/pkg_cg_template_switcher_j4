@@ -1,7 +1,7 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.0.7
+ * @version 2.1.0
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  * @copyright (c) 2023 ConseilGouz. All Rights Reserved.
  * @author ConseilGouz 
@@ -12,6 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 class CGTemplateSwitcherHelper
 {
@@ -28,9 +29,9 @@ class CGTemplateSwitcherHelper
 		$results->options    = array();
 		foreach ($styles as $template) {
 		    $template_dir = strtolower(JPATH_ROOT.'/templates/'.$template->template); // for file_exists
-		    $template_dir_html =  \JURI::root().'/templates/'. $template->template; // for display
+		    $template_dir_html =  Uri::root().'/templates/'. $template->template; // for display
 		    $template_media_dir = strtolower(JPATH_ROOT.'/media/templates/site/'.$template->template.'/images');
-			$template_media_dir_html = \JURI::root().'/media/templates/site/'.$template->template.'/images';
+			$template_media_dir_html = Uri::root().'/media/templates/site/'.$template->template.'/images';
 			$results->options[$template->id] = HTMLHelper::_('select.option', $template->id, $template->title);
 			$results->home[$template->id] = $template->home;
 			if ($params->get('showpreview', 'true') == 'true') {

@@ -1,10 +1,10 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.0.6
+ * @version 2.1.0
  * @subpackage  system.cg_style
  *
- * @copyright   Copyright (C) 2022 Conseilgouz. All rights reserved.
+ * @copyright   Copyright (C) 2023 Conseilgouz. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *
  */
@@ -34,7 +34,7 @@ class PlgSystemCGStyle extends CMSPlugin
 			if ($style != null) {
 				$j = new Version();
 				$version=substr($j->getShortVersion(), 0,1); 
-				if ($version == "4") { // Joomla 4.0
+				if ($version >= "4") { // Joomla 4 and higher
 					$app->setTemplate( $style);
 				}else { //  Joomla 3.10
 					$app->setTemplate( $style->template, $style->params );
