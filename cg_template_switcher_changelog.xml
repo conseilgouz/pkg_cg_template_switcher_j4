@@ -2,43 +2,6 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
-		<version>2.1.1</version>
-        <note>
-            <item>Update : 27/08/2023</item>
-        </note>
-		<fix>
-            <item>Package version error</item>
-		</fix>
-	</changelog>
-	<changelog>
-		<element>pkg_cg_template_switcher</element>
-		<type>package</type>
-		<version>2.1.0</version>
-        <note>
-            <item>Update : 27/08/2023</item>
-        </note>
-		<fix>
-            <item>Joomla 5 compatibility</item>
-		</fix>
-		<change>
-			<item>Use webassetmanager</item>
-		</change>
-	</changelog>
-	<changelog>
-		<element>pkg_cg_template_switcher</element>
-		<type>package</type>
-		<version>2.0.7</version>
-        <note>
-            <item>Update : 18/02/2023</item>
-        </note>
-		<remove>
-            <item>Remove jQuery dependency</item>
-			<item>Remove FancyBox</item>
-		</remove>
-	</changelog>
-	<changelog>
-		<element>pkg_cg_template_switcher</element>
-		<type>package</type>
 		<version>2.0.6</version>
         <note>
             <item>Update : 17/10/2022</item>
