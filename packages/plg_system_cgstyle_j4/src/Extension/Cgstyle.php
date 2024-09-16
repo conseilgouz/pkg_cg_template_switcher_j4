@@ -8,22 +8,31 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *
  */
-
+namespace Conseilgouz\Plugin\System\Cgstyle\Extension;
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Version;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Event\SubscriberInterface;
 
-class PlgSystemCGStyle extends CMSPlugin
-{
-	public function onAfterRoute() {
+final class Cgstyle extends CMSPlugin implements SubscriberInterface {
+    
+    use DatabaseAwareTrait;
+    
+    public static function getSubscribedEvents(): array {
+        return [
+            'onAfterRoute'   => 'afterRoute'
+        ];
+    }
+	public function afterRoute() {
 		$app= Factory::getApplication();
 		if ($app->isClient('administrator')) { // run only on frontend
 			return;
 		}
 		$cookieValue = Factory::getApplication()->input->cookie->get('cg_template');	
 		if ($cookieValue) {
-			$db = Factory::getDbo();
+			$db = $this->getDatabase();
 			$query = $db->getQuery(true);
 			$query->select('*');
 			$query->from('#__template_styles');
@@ -36,6 +45,9 @@ class PlgSystemCGStyle extends CMSPlugin
 				$version=substr($j->getShortVersion(), 0,1); 
 				if ($version >= "4") { // Joomla 4 and higher
 					$app->setTemplate( $style);
+					if (strpos($style->template,'astroid') === 0) {
+						\Astroid\Framework::getTemplate($style->id);
+					}
 				}else { //  Joomla 3.10
 					$app->setTemplate( $style->template, $style->params );
 				}
