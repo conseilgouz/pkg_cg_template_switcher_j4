@@ -13,7 +13,7 @@
             <item>Use dynamic version field</item>
         </addition>
         <fix>
-            <item>Check selected template language.</item>
+            <item>Check selected template language</item>
         </fix>
 	</changelog>
 	<changelog>
