@@ -1,9 +1,8 @@
 <?php
 /**
-* CG Template Switcher package  - Joomla 4 Module 
-* Version			: 2.1.0
+* CG Template Switcher package  - Joomla 4.x/5.x Module 
 * Package			: CG Template Switcher
-* copyright 		: Copyright (C) 2023 ConseilGouz. All rights reserved.
+* copyright 		: Copyright (C) 2025 ConseilGouz. All rights reserved.
 * license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
 */
 // No direct access to this file
@@ -90,6 +89,7 @@ class pkg_CGTemplateSwitcherInstallerScript
 			Folder::delete($f);
 		}
 		$obsloteFiles = [sprintf("%s/modules/mod_%s/helper.php", JPATH_SITE, $this->extname),
+                         sprintf("%s/modules/mod_%s/mod_cg_template_switcher.php", JPATH_SITE, $this->extname),
 						 sprintf("%s/modules/mod_%s/script.php", JPATH_SITE, $this->extname),
 						 sprintf("%s/modules/mod_%s/tmpl/lighbox.html", JPATH_SITE, $this->extname),
 						];

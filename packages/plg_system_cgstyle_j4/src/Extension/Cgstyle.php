@@ -1,11 +1,10 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.1.0
  * @subpackage  system.cg_style
  *
- * @copyright   Copyright (C) 2023 Conseilgouz. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2025 Conseilgouz. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
  *
  */
 
@@ -54,9 +53,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                 $j = new Version();
                 $version = substr($j->getShortVersion(), 0, 1);
                 if ($version >= "4") { // Joomla 4 and higher
-
-                    $ret = $app->setTemplate($style);
-
+                    $app->setTemplate($style);
                     if (strpos($style->template, 'yootheme') === 0) {
                         $config = app(Config::class);
                         app()->call([ThemeLoader::class, 'initTheme']);

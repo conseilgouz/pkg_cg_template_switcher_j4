@@ -2,6 +2,20 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.2.2</version>
+        <note>
+            <item>Update : 02/02/2025</item>
+        </note>
+		<change>
+            <item>Template Switcher module becomes a service provider</item>
+		</change>
+        <addition>
+            <item>Use dynamic version field</item>
+        </addition>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.2.1</version>
         <note>
             <item>Update : 02/02/2025</item>
