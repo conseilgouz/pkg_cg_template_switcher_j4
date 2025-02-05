@@ -12,6 +12,7 @@ namespace Conseilgouz\Plugin\System\Cgstyle\Extension;
 
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Version;
 use Joomla\Database\DatabaseAwareTrait;
@@ -38,7 +39,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         if ($app->isClient('administrator')) { // run only on frontend
             return;
         }
-        $cookieValue = Factory::getApplication()->input->cookie->get('cg_template');
+        $cookieValue = $app->input->cookie->get('cg_template');
 
         if ($cookieValue) {
             $db = $this->getDatabase();
@@ -50,6 +51,18 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
             $db->setQuery($query);
             $style = $db->loadObject();
             if ($style != null) {
+                $lang = $app->getLanguage();
+                if (!is_numeric($style->home)) { // home for a specific language
+                    if ($style->home != $lang->getLanguage()) {
+                        $this->loadLanguage();
+                        $app->enqueueMessage(Text::_('CG_WRONG_LANGUAGE'), 'error');
+                        $options = ['expires' => 'Thu, 01 Jan 1970 00:00:00 UTC',
+                                    'path' => '/'];
+                        $app->input->cookie->set('cg_template', "", $options);
+                        return;
+                    }
+                }
+
                 $j = new Version();
                 $version = substr($j->getShortVersion(), 0, 1);
                 if ($version >= "4") { // Joomla 4 and higher

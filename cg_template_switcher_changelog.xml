@@ -4,7 +4,7 @@
 		<type>package</type>
 		<version>2.2.2</version>
         <note>
-            <item>Update : 02/02/2025</item>
+            <item>Update : 05/02/2025</item>
         </note>
 		<change>
             <item>Template Switcher module becomes a service provider</item>
@@ -12,6 +12,9 @@
         <addition>
             <item>Use dynamic version field</item>
         </addition>
+        <fix>
+            <item>Check selected template language.</item>
+        </fix>
 	</changelog>
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
