@@ -109,11 +109,30 @@ class plgfieldscgtemplateswitcherInstallerScript
         $data['type'] = 'cgtemplateswitcher';
         $data['title'] = Text::_('PLG_FIELDS_LABEL');
         $data['label'] = Text::_('PLG_FIELDS_LABEL');
+        $data['params'] = ['templatesall' => true];
         $data['context'] = 'com_users.user';
         $data['description'] = '';
-        $data['params'] = ['templatesall' => true];
         $data['state'] = true;
+        $data['language'] = '*';
         $table->save($data);
+        
+        // update default value after creating the new field
+        $conditions = array(
+            $db->qn('type') . ' = ' . $db->q('cgtemplateswitcher'),
+            $db->qn('context') . ' = ' . $db->q('com_users.user'));
+        $fields = array($db->qn('default_value') . ' = '.$db->q(''));
+
+        $query = $db->getQuery(true);
+        $query->update($db->quoteName('#__fields'))->set($fields)->where($conditions);
+        $db->setQuery($query);
+        try {
+            $db->execute();
+        } catch (RuntimeException $e) {
+            Log::add('unable to update default_value' , Log::ERROR, 'jerror');
+        }
+
+
+
         Factory::getApplication()->enqueueMessage(Text::_('PLG_FIELDS_OK'), 'notice');
     }
     // Check if Joomla version passes minimum requirement

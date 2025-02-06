@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 });
 function go_plgswitch() {
-	document.getElementById("jform_com_fields_default_template").addEventListener( 'change', function(){
+	document.getElementById("jform_com_fields_template_defaut").addEventListener( 'change', function(){
 		sortValue = this.selectedOptions[0].value;
         cgplgswitch_cookie(sortValue);
 	});

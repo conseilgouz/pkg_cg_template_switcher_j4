@@ -81,6 +81,10 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                         $options = ['expires' => 'Thu, 01 Jan 1970 00:00:00 UTC',
                                     'path' => '/'];
                         $app->input->cookie->set('cg_template', "", $options);
+                        if ($user->id) { // clean custom field
+                            $fieldmodel = new FieldModel(array('ignore_request' => true));
+                            $fieldmodel->setFieldValue($field_id, $user->id, 0);
+                        }
                         return;
                     }
                 }

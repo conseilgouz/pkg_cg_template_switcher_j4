@@ -27,6 +27,7 @@ class CgtemplateswitcherField extends FormField
         $app = Factory::getApplication();
 
         $list = ModuleHelper::getModuleList();
+        $module_params = null;
         foreach ($list as $module) {
             if ($module->module == 'mod_cg_template_switcher') {
                 $module_params = $module->params;

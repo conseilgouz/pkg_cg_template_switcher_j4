@@ -71,6 +71,7 @@ if (!$curr_template_idx) {
 $user = $app->getIdentity();
 if ($user->id) {
     $test = FieldsHelper::getFields('com_users.user', $user);
+    $template_id = 0;
     foreach ($test as $field) {
         if ($field->type == 'cgtemplateswitcher') {
             $template_id = $field->value;
