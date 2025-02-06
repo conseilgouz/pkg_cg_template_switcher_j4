@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="plugin" version="4.0" group="fields" method="upgrade">
+	<name>plg_fields_cgtemplateswitcher</name>
+	<author>ConseilGouz</author>
+	<creationDate>2025-02-06</creationDate>
+	<copyright>Copyright (C) 2025 ConseilGouz. All rights reserved.</copyright>
+	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
+	<authorUrl>www.conseilgouz.com</authorUrl>
+	<version>2.2.3</version>
+	<description>PLG_FIELDS_CGTEMPLATESWITCHER_XML_DESC</description>
+	<namespace path="src">ConseilGouz\Plugin\Fields\Cgtemplateswitcher</namespace>
+    <scriptfile>script.php</scriptfile>
+	<files>
+		<folder plugin="cgtemplateswitcher">services</folder>
+		<folder>src</folder>
+		<folder>params</folder>
+		<folder>tmpl</folder>
+	</files>
+	<media destination="plg_fields_cgtemplateswitcher" folder="media">
+		<folder>js</folder>
+		<filename>index.html</filename>
+	</media>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_fields_cgtemplateswitcher.ini</language>
+		<language tag="en-GB">language/en-GB/plg_fields_cgtemplateswitcher.sys.ini</language>
+		<language tag="fr-FR">language/fr-FR/plg_fields_cgtemplateswitcher.ini</language>
+		<language tag="fr-FR">language/fr-FR/plg_fields_cgtemplateswitcher.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+			</fieldset>
+		</fields>
+	</config>
+
+</extension>

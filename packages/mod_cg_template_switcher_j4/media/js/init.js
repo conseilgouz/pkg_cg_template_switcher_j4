@@ -1,8 +1,7 @@
 /**
  * @package CG template switcher Module
- * @version 2.0.7 
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
- * @copyright (c) 2023 ConseilGouz. All Rights Reserved.
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+ * @copyright (c) 2025 ConseilGouz. All Rights Reserved.
  * @author ConseilGouz 
  * 
  **/
@@ -75,6 +74,15 @@ function CG_TS_Cookie(b) {
 	$secure = "";
 	if (window.location.protocol == "https:") $secure="secure;"; 
 	document.cookie = "cg_template="+encodeURIComponent(b)+expires+"; path=/; samesite=lax;"+$secure;
+
+    plg  = document.getElementById('jform_com_fields_default_template');
+    if (!plg) return;
+    for (let i = 0; i < plg.length; i++) {
+       if (plg[i].value == b) { 
+            plg.selectedIndex = i;
+       }
+    }
+    
 	document.getElementById('cg_ts_form').submit();
 }
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="fieldparams">
+		<fieldset name="fieldparams">
+			<field name="templatesall" 	type="radio" class="btn-group btn-group-yesno"	default="true" 
+				label="PLG_FIELDS_CGTEMPLATESWITCHER_TEMPLATES_ALL" 
+                description="PLG_FIELDS_CGTEMPLATESWITCHER_TEMPLATES_ALLDESC"
+				>
+				<option value="true">JYES</option>
+				<option value="false">JNO</option>
+			</field>		
+			<field showon="templatesall:false" name="templates" type="templatestyle" 
+				label="PLG_FIELDS_CGTEMPLATESWITCHER_TEMPLATES" description="PLG_FIELDS_CGTEMPLATESWITCHER_TEMPLATESDESC" 
+				multiple="multiple" layout="joomla.form.field.groupedlist-fancy-select"/>
+		</fieldset>
+	</fields>
+</form>

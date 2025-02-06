@@ -4,7 +4,7 @@
  * @subpackage  system.cg_style
  *
  * @copyright   Copyright (C) 2025 Conseilgouz. All rights reserved.
- * @license     GNU General Public License version 3 or later; see LICENSE.txt
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *
  */
 
@@ -15,6 +15,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Version;
+use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
+use Joomla\Component\Fields\Administrator\Model\FieldModel;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
 use YOOtheme\Theme\Joomla\ThemeLoader;
@@ -39,15 +41,35 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         if ($app->isClient('administrator')) { // run only on frontend
             return;
         }
+        $user = Factory::getApplication()->getIdentity();
+        $template_id = 0;
+        if ($user->id) {
+            $test = FieldsHelper::getFields('com_users.user', $user);
+            foreach ($test as $field) {
+                if ($field->type == 'cgtemplateswitcher') {
+                    $template_id = $field->value;
+                    $field_id = $field->id;
+                }
+            }
+        }
         $cookieValue = $app->input->cookie->get('cg_template');
 
+        if ($template_id && $cookieValue && ($template_id != $cookieValue)) {
+            // need to update template switcher field value
+            $fieldmodel = new FieldModel(array('ignore_request' => true));
+            $fieldmodel->setFieldValue($field_id, $user->id, $cookieValue);
+        }
+
         if ($cookieValue) {
+            $template_id = $cookieValue;
+        }
+        if ($template_id) {
             $db = $this->getDatabase();
             $query = $db->getQuery(true);
             $query->select('*');
             $query->from('#__template_styles');
             $query->where('client_id = 0');
-            $query->where('id = ' . (int)$cookieValue);
+            $query->where('id = ' . (int)$template_id);
             $db->setQuery($query);
             $style = $db->loadObject();
             if ($style != null) {
@@ -62,7 +84,6 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                         return;
                     }
                 }
-
                 $j = new Version();
                 $version = substr($j->getShortVersion(), 0, 1);
                 if ($version >= "4") { // Joomla 4 and higher

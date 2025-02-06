@@ -12,13 +12,16 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
+use Joomla\Component\Fields\Administrator\Model\FieldModel;
 use ConseilGouz\Module\CGTemplateSwitcher\Site\Helper\CGTemplateSwitcherHelper;
 
+$app = Factory::getApplication();
 if (!PluginHelper::isEnabled('system', 'cgstyle')) {
-    Factory::getApplication()->enqueueMessage(Text::_('CG_ACTIVATE'), 'error');
+    $app->enqueueMessage(Text::_('CG_ACTIVATE'), 'error');
     return false;
 }
-$document 		= Factory::getApplication()->getDocument();
+$document 		= $app->getDocument();
 $modulefield	= 'media/mod_cg_template_switcher/';
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
@@ -60,11 +63,25 @@ if (empty($templates->options)) { ?>
 	</form>
 <?php return;
 }
-$app = Factory::getApplication();
 $curr_template = $app->getTemplate(true);  // Current template
 $curr_template_idx = $app->input->cookie->get('cg_template');	 // template ix from cookie
 if (!$curr_template_idx) {
     $curr_template_idx = $curr_template->id;
+}
+$user = $app->getIdentity();
+if ($user->id) {
+    $test = FieldsHelper::getFields('com_users.user', $user);
+    foreach ($test as $field) {
+        if ($field->type == 'cgtemplateswitcher') {
+            $template_id = $field->value;
+            $field_id = $field->id;
+        }
+    }
+    if (($template_id) && ($template_id != $curr_template_idx)) {
+        // need to update template switcher field value
+        $fieldmodel = new FieldModel(array('ignore_request' => true));
+        $fieldmodel->setFieldValue($field_id, $user->id, $curr_template_idx);
+    }
 }
 ?>
 

@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Version;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
 
 class pkg_CGTemplateSwitcherInstallerScript
@@ -89,6 +90,7 @@ class pkg_CGTemplateSwitcherInstallerScript
 			Folder::delete($f);
 		}
 		$obsloteFiles = [sprintf("%s/modules/mod_%s/helper.php", JPATH_SITE, $this->extname),
+                         sprintf("%s/modules/mod_%s/lighbox.html", JPATH_SITE, $this->extname), // test file
                          sprintf("%s/modules/mod_%s/mod_cg_template_switcher.php", JPATH_SITE, $this->extname),
 						 sprintf("%s/modules/mod_%s/script.php", JPATH_SITE, $this->extname),
 						 sprintf("%s/modules/mod_%s/tmpl/lighbox.html", JPATH_SITE, $this->extname),
@@ -130,7 +132,7 @@ class pkg_CGTemplateSwitcherInstallerScript
 		} catch (RuntimeException $e) {
 		}
 		// remove obsolete update sites
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true)
 			->delete('#__update_sites')
 			->where($db->quoteName('location') . ' like "%432473037d.url-de-test.ws/%"');
@@ -152,7 +154,7 @@ class pkg_CGTemplateSwitcherInstallerScript
 	// enable CGStyle plugin
 	private function postinstall_enable_plugin() {
 		// enable plugin
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
         $conditions = array(
             $db->qn('type') . ' = ' . $db->q('plugin'),
             $db->qn('element') . ' = ' . $db->quote('cgstyle')
@@ -212,7 +214,7 @@ class pkg_CGTemplateSwitcherInstallerScript
 			JPATH_PLUGINS . '/system/' . $this->installerName,
 			sprintf("%s/modules/mod_%s/script.php", JPATH_SITE, $this->extname)
 		]);
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true)
 			->delete('#__extensions')
 			->where($db->quoteName('element') . ' = ' . $db->quote($this->installerName))
@@ -222,5 +224,17 @@ class pkg_CGTemplateSwitcherInstallerScript
 		$db->execute();
 		Factory::getCache()->clean('_system');
 	}
-	
+    
+    public function delete($files = [])
+    {
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                Folder::delete($file);
+            }
+
+            if (is_file($file)) {
+                File::delete($file);
+            }
+        }
+    }
 }
