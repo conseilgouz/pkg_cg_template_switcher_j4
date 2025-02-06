@@ -76,13 +76,13 @@ function CG_TS_Cookie(b) {
 	document.cookie = "cg_template="+encodeURIComponent(b)+expires+"; path=/; samesite=lax;"+$secure;
 
     plg  = document.getElementById('jform_com_fields_default_template');
-    if (!plg) return;
-    for (let i = 0; i < plg.length; i++) {
-       if (plg[i].value == b) { 
-            plg.selectedIndex = i;
-       }
+    if (plg) {
+        for (let i = 0; i < plg.length; i++) {
+            if (plg[i].value == b) { 
+                plg.selectedIndex = i;
+            }
+        }
     }
-    
 	document.getElementById('cg_ts_form').submit();
 }
 
