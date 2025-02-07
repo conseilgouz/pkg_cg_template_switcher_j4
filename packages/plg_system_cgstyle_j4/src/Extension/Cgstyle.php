@@ -43,6 +43,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         }
         $user = Factory::getApplication()->getIdentity();
         $template_id = 0;
+        $field_id = 0;
         if ($user->id) {
             $test = FieldsHelper::getFields('com_users.user', $user);
             foreach ($test as $field) {
@@ -54,7 +55,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         }
         $cookieValue = $app->input->cookie->get('cg_template');
 
-        if ($template_id && $cookieValue && ($template_id != $cookieValue)) {
+        if ($field_id && $cookieValue && ($template_id != $cookieValue)) {
             // need to update template switcher field value
             $fieldmodel = new FieldModel(array('ignore_request' => true));
             $fieldmodel->setFieldValue($field_id, $user->id, $cookieValue);
