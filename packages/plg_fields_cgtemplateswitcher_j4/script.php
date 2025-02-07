@@ -13,16 +13,18 @@ use Joomla\CMS\Log\Log;
 use Joomla\Component\Fields\Administrator\Model\FieldModel;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 
 class plgfieldscgtemplateswitcherInstallerScript
 {
-    private $min_joomla_version      = '4.0.0';
-    private $min_php_version         = '8.0';
-    private $name                    = 'Plugin CG Template Switcher';
-    private $exttype                 = 'plugin';
-    private $extfolder               = 'fields';
-    private $extname                 = 'cgtemplateswitcher';
-    private $previous_version        = '';
+    private $min_joomla_version     = '4.0.0';
+    private $min_php_version        = '8.0';
+    private $name                   = 'Plugin CG Template Switcher';
+    private $exttype                = 'plugin';
+    private $extfolder              = 'fields';
+    private $extname                = 'cgtemplateswitcher';
+    private $extension              = 'plg_fields_cgtemplateswitcher';
+    private $previous_version       = '';
     private $dir           = null;
     private $lang;
     private $installerName = 'plgsystemcgtemplateswitcherinstaller';
@@ -30,11 +32,55 @@ class plgfieldscgtemplateswitcherInstallerScript
     {
         $this->dir = __DIR__;
         $this->lang = Factory::getApplication()->getLanguage();
-        $this->lang->load($this->extname);
     }
+	function uninstall($parent) {
+		$this->loadLanguage();
+        
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from('#__fields');
+        $query->where('type = ' . $db->quote('cgtemplateswitcher'));
+        $query->where('state = 1');
+        $query->setLimit(1);
+        $db->setQuery($query);
+        $found = $db->loadObject();
+        if (!$found) {// Found in db => exit
+            return;
+        }
+        // delete field values
+        $query   = $db->getQuery(true);
+        $query->delete($db->quoteName('#__fields_values'))
+              ->where($db->quoteName('field_id') . ' = :fieldid')
+              ->bind(':fieldid', $found->id, \Joomla\Database\ParameterType::INTEGER);
+        $db->setQuery($query);
+        $db->execute();
+        // update field state to -2
+        $conditions = array(
+            $db->qn('id') . ' = ' . (int)$found->id,
+            $db->qn('state') . ' = 1'
+        );
+        $fields = array($db->qn('state') . ' = -2');
 
+        $query = $db->getQuery(true);
+        $query->update($db->quoteName('#__fields'))->set($fields)->where($conditions);
+        $db->setQuery($query);
+        try {
+            $db->execute();
+        } catch (RuntimeException $e) {
+            Log::add('unable to enable '.$this->name, Log::ERROR, 'jerror');
+        }
+        
+        
+        // delete field
+        $field = new FieldModel(array('ignore_request' => true));
+        $key = [$found->id];
+        $ret = $field->delete($key);
+		return true;
+	}
     public function preflight($type, $parent)
     {
+        $this->loadLanguage();
         if (! $this->passMinimumJoomlaVersion()) {
             $this->uninstallInstaller();
             return false;
@@ -52,6 +98,7 @@ class plgfieldscgtemplateswitcherInstallerScript
 
     public function postflight($type, $parent)
     {
+        $this->loadLanguage();
         if (($type == 'install') || ($type == 'update')) {
             $this->postinstall_cleanup();
         }
@@ -60,9 +107,6 @@ class plgfieldscgtemplateswitcherInstallerScript
     }
     private function postinstall_cleanup()
     {
-
-        $this->lang->load('plg_fields_cgtemplateswitcher', JPATH_ADMINISTRATOR, null, true);
-
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         //---------------- remove obsolete update sites -------------
         $query = $db->getQuery(true)
@@ -103,7 +147,6 @@ class plgfieldscgtemplateswitcherInstallerScript
             return;
         }
         $field = new FieldModel(array('ignore_request' => true));
-        $table = $field->getTable();
         $data = [];
         $data['id']     = 0;
         $data['type'] = 'cgtemplateswitcher';
@@ -112,29 +155,31 @@ class plgfieldscgtemplateswitcherInstallerScript
         $data['params'] = ['templatesall' => true];
         $data['context'] = 'com_users.user';
         $data['description'] = '';
+        $data['default_value'] = '';
         $data['state'] = true;
         $data['language'] = '*';
-        $table->save($data);
-        
-        // update default value after creating the new field
-        $conditions = array(
-            $db->qn('type') . ' = ' . $db->q('cgtemplateswitcher'),
-            $db->qn('context') . ' = ' . $db->q('com_users.user'));
-        $fields = array($db->qn('default_value') . ' = '.$db->q(''));
-
-        $query = $db->getQuery(true);
-        $query->update($db->quoteName('#__fields'))->set($fields)->where($conditions);
-        $db->setQuery($query);
-        try {
-            $db->execute();
-        } catch (RuntimeException $e) {
-            Log::add('unable to update default_value' , Log::ERROR, 'jerror');
-        }
-
-
+        // enable update on frontend
+        $rules = [];
+        $rules['core.edit.value'] = [1 => true];
+        $data['rules'] = $rules;
+        $field->save($data);
 
         Factory::getApplication()->enqueueMessage(Text::_('PLG_FIELDS_OK'), 'notice');
     }
+
+    public function loadLanguage()
+    {
+        $path = JPATH_ADMINISTRATOR . '/language/';
+        $this->lang->load($this->extension, $path, 'en-GB', true);
+        $this->lang->load($this->extension, $path, $this->lang->getDefault(), true);
+        $this->lang->load($this->extension, $path, null, true);
+        $this->lang->load($this->extension . '.sys', $path, 'en-GB', true);
+        $this->lang->load($this->extension . '.sys', $path, $this->lang->getDefault(), true);
+        $this->lang->load($this->extension . '.sys', $path, null, true);
+        return true;
+    }
+
+
     // Check if Joomla version passes minimum requirement
     private function passMinimumJoomlaVersion()
     {
@@ -182,7 +227,7 @@ class plgfieldscgtemplateswitcherInstallerScript
             ->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
         $db->setQuery($query);
         $db->execute();
-        Factory::getCache()->clean('_system');
+        Factory::getApplication()->getCache()->clean('_system');
     }
 
     public function delete($files = [])

@@ -24,7 +24,8 @@
 	</languages>
 	<config>
        <fields name="params" >
-            <fieldset name="basic">
+            <fieldset name="basic" addfieldprefix="Conseilgouz\Plugin\System\Cgstyle\Field">
+				<field name="version" type="version" extension="cgstyle" margintop="-3em" />
 			</fieldset>
         </fields>
 		</config>

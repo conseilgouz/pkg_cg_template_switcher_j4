@@ -29,7 +29,8 @@
 	</languages>
 	<config>
 		<fields name="params">
-			<fieldset name="basic">
+			<fieldset name="basic" addfieldprefix="ConseilGouz\Plugin\Fields\Cgtemplateswitcher\Field">
+				<field name="version" type="version" extension="cgtemplateswitcher" margintop="-3em"/>
 			</fieldset>
 		</fields>
 	</config>

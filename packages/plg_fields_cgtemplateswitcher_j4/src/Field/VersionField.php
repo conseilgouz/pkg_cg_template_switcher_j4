@@ -1,15 +1,14 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.1.0
  * @subpackage  system.cg_style
  *
- * @copyright   Copyright (C) 2023 Conseilgouz. All rights reserved.
+ * @copyright   Copyright (C) 2025 Conseilgouz. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *
  */
 
-namespace Conseilgouz\Plugin\System\Cgstyle\Field;
+namespace ConseilGouz\Plugin\Fields\Cgtemplateswitcher\Field;
 
 // Prevent direct access
 defined('_JEXEC') || die;
@@ -45,7 +44,7 @@ class VersionField extends FormField
             ->select($db->quoteName('manifest_cache'))
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('element') . '=' . $db->Quote($extension))
-            ->where($db->quoteName('folder') . '=' . $db->Quote('system'));
+            ->where($db->quoteName('folder') . '=' . $db->Quote('fields'));
         $db->setQuery($query, 0, 1);
         $row = $db->loadAssoc();
         $tmp = json_decode($row['manifest_cache']);
