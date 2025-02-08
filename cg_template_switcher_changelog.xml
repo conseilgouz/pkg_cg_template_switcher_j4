@@ -4,11 +4,14 @@
 		<type>package</type>
 		<version>2.2.3</version>
         <note>
-            <item>Update : 06/02/2025</item>
+            <item>Update : 08/02/2025</item>
         </note>
         <addition>
             <item>User custom field CG Template Switcher to define user default template</item>
         </addition>
+        <fix>
+            <item>Allow multiple modules on a single page</item>
+        </fix>
 	</changelog>
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
