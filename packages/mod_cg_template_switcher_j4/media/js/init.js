@@ -69,8 +69,12 @@ function go_switch(cgswoptions) {
 }
 
 function CG_TS_ImageShow(id,s) {
+    shows = document.querySelectorAll('.CG_TS_SHOW');
+    for(var i=0; i<shows.length; i++) {
+        shows[i].style ="display:none"; // hide all modules image block
+    }
 	if (CG_TS_Images[s]) {
-		document.getElementById("CG_TS_Switcher_"+id).innerHTML = decodeURIComponent("%3C")+'img src="'+CG_TS_Images[s].preview+'" id="CG_TS_Img"'+decodeURIComponent("%3E");
+		document.getElementById("CG_TS_Switcher_"+id).innerHTML = decodeURIComponent("%3C")+'img src="'+CG_TS_Images[s].preview+'" class="CG_TS_Img" id="CG_TS_Img_'+id+'"'+decodeURIComponent("%3E");
 	} else {
 		document.getElementById("CG_TS_Switcher_"+id).innerHTML = cgswitchmod[id].noimage;
 	}

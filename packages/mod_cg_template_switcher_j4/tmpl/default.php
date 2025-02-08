@@ -27,6 +27,8 @@ $modulefield	= 'media/mod_cg_template_switcher/';
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $app->getDocument()->getWebAssetManager();
 
+$wa->registerAndUseStyle('cgtemplateswitcher'.$module->id, $modulefield.'css/cgtemplateswitcher.css');
+
 if ($params->get('css')) {
     $wa->addInlineStyle($params->get('css'));
 }
@@ -48,7 +50,8 @@ $document->addScriptOptions(
     array('id' => $module->id,
           'cookie_duration' => $params->get('cookie_duration', 0),'showpreview' => $params->get('showpreview', 'true'),
           'autoswitch' => $params->get('autoswitch', 'false'),
-          'noimage' => Text::_('NOIMAGE'),'templates' => $templates_js)
+          'noimage' => Text::_('NOIMAGE'),'templates' => $templates_js,
+          'userfield' => $params->get('user_field','false'))
 );
 if ((bool)$app->getConfig()->get('debug')) { // Mode debug
     $document->addScript(''.URI::base(true).'/media/mod_cg_template_switcher/js/init.js');
@@ -80,7 +83,7 @@ if ($user->id) {
         }
     }
     if (($template_id) && ($template_id != $curr_template_idx)) {
-        // need to update template switcher field value
+    // need to update template switcher field value
         $fieldmodel = new FieldModel(array('ignore_request' => true));
         $fieldmodel->setFieldValue($field_id, $user->id, $curr_template_idx);
     }
@@ -88,7 +91,7 @@ if ($user->id) {
 ?>
 
 <form id="cg_ts_form_<?php echo $module->id;?>" class="cg_ts_form" data="<?php echo $module->id;?>" method="post" style="border:none" >
-	<div id="CG_TS_SHOW_<?php echo $module->id;?>" style="margin:6px 0 0 0;padding:0;border:none;background:none;overflow:hidden;display:none">
+	<div id="CG_TS_SHOW_<?php echo $module->id;?>" class="CG_TS_SHOW" style="margin:6px 0 0 0;padding:0;border:none;background:none;overflow:hidden;display:none">
 		<div id="CG_TS_Switcher_<?php echo $module->id;?>" style="padding:0;border:none;background:none;text-align:center;vertical-align:middle">
 		</div>
 	</div>
@@ -98,8 +101,8 @@ if ($user->id) {
 		</div>
 		<?php if ($params->get("autoswitch", "false") == 'false') { // 01.0.14 : autoswitch?>
 		<div id="CG_TS_LIST_<?php echo $module->id;?>" style="padding:6px 0 0 0;border:none;background:none;text-align:center">
-			<input id="CG_TS_OKBtn_<?php echo $module->id;?>" data="<?php echo $module->id;?>" class="button" type="button" style="margin:0" value="<?php echo Text::_('CGSELECT'); ?>"/>
-			<input id ="CG_TS_CancelBtn_<?php echo $module->id;?>" data="<?php echo $module->id;?>" class="button" type="button" style="margin-left:1em" value="<?php echo Text::_('CGCANCEL'); ?>" title="<?php echo Text::_('CGCANCELDESC'); ?>" />
+			<input id="CG_TS_OKBtn_<?php echo $module->id;?>" data="<?php echo $module->id;?>" class="button CG_TS_OKBtn" type="button" style="margin:0" value="<?php echo Text::_('CGSELECT'); ?>"/>
+			<input id ="CG_TS_CancelBtn_<?php echo $module->id;?>" data="<?php echo $module->id;?>" class="button CG_TS_CancelBtn" type="button" style="margin-left:1em" value="<?php echo Text::_('CGCANCEL'); ?>" title="<?php echo Text::_('CGCANCELDESC'); ?>" />
 		</div>
 		<?php } ?>
 	</div>

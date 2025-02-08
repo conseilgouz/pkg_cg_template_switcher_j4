@@ -19,6 +19,7 @@
 	</files>
 	<media destination="mod_cg_template_switcher" folder="media">
 		<folder>js</folder>
+        <folder>css</folder>
 		<filename>index.html</filename>
 	</media>
 	<languages>
@@ -59,11 +60,16 @@
 				<option value="false">JNO</option>
 			</field>	
 			<field  name="cookie_duration" type="text" default="0" label="COOKIE_DURATION" description="COOKIE_DURATIONDESC" size="3" maxlength="3"/>
-			
+			<field  name="user_field" type="sql" class="btn-group btn-group-yesno"	default="false" 
+				label="CG_STYLE_USER" description="CG_STYLE_USERDESC" disabled
+                query="select f.id as id, f.state as value from #__fields f where f.context like 'com_user%' and f.type like 'cgtemplateswitcher' "
+				key_field="id"	value_field="value"                
+                >
+			</field>
 		    <field type="note" name="cg_note1" label="CG_NOTE1" heading="p" />
 			<field name="css" type="textarea" label="CG_CSS" description="CG_CSS_DESC" cols="40" rows="4" filter="raw" 
-				default="#CG_TS_Select {} #CG_TS_Img{max-width:100%} #CG_TS_OKBtn{} #CG_TS_CancelBtn{}"
-			/>	
+				default=".CG_TS_Select {} .CG_TS_Img{max-width:100%} .CG_TS_OKBtn{} .CG_TS_CancelBtn{}"
+			/>
 
 		</fieldset>
 		<fieldset name="advanced">

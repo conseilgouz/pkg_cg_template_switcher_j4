@@ -1,0 +1,9 @@
+; @package CG template switcher Module
+; @license https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
+; @copyright (c) 2025 ConseilGouz. All Rights Reserved.
+; @author ConseilGouz 
+;
+.CG_TS_Select {} 
+.CG_TS_OKBtn{} 
+.CG_TS_CancelBtn{}
+.CG_TS_Img{max-width:100%} 
