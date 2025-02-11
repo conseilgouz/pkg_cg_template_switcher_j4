@@ -151,10 +151,12 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         if (!$gray) { // empty or null : take default value
             $gray = $default;
         }
+        $customcss = $this->params->get('customcss','');
+        
         $customCSS = <<< CSS
 .cgcolor {filter: grayscale($gray%) invert(100%)}
 .cgcolor img { filter: brightness(1.1) contrast(1.2) invert(100%) grayscale(0) }
-
+$customcss
 CSS;
 
         $wa = $app->getDocument()->getWebAssetManager();

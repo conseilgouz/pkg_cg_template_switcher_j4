@@ -26,6 +26,10 @@
        <fields name="params" >
             <fieldset name="basic" addfieldprefix="Conseilgouz\Plugin\System\Cgstyle\Field">
 				<field name="version" type="version" extension="cgstyle" margintop="-3em" />
+				<field name="customcss" type="textarea" label="CGTS_CSS" description="CGTS_CSS_DESC" cols="200" rows="4" filter="raw" 
+					default=""			
+				/>	
+                
 			</fieldset>
         </fields>
 		</config>
