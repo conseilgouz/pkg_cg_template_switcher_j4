@@ -44,12 +44,17 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         $user = Factory::getApplication()->getIdentity();
         $template_id = 0;
         $field_id = 0;
+        $color_id = 0;
         if ($user->id) {
             $test = FieldsHelper::getFields('com_users.user', $user);
             foreach ($test as $field) {
                 if ($field->type == 'cgtemplateswitcher') {
                     $template_id = $field->value;
                     $field_id = $field->id;
+                }
+                if ($field->type == 'cgtscolor') {
+                    $template_id = $field->value;
+                    $color_id = $field->id;
                 }
             }
         }
@@ -60,6 +65,15 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
             // need to update template switcher field value
             $fieldmodel = new FieldModel(array('ignore_request' => true));
             $fieldmodel->setFieldValue($field_id, $user->id, $cookie[0]);
+        }
+        if ($color_id) {
+            // need to update template switcher field value
+            $fieldmodel = new FieldModel(array('ignore_request' => true));
+            if ($cookie[1] > 0) {
+                $fieldmodel->setFieldValue($color_id, $user->id, 'yes');
+            } else {
+                $fieldmodel->setFieldValue($color_id, $user->id, 'no');
+            }
         }
         if (sizeof($cookie) > 0) {
             $template_id = $cookie[0];
@@ -85,6 +99,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                         if ($user->id) { // clean custom field
                             $fieldmodel = new FieldModel(array('ignore_request' => true));
                             $fieldmodel->setFieldValue($field_id, $user->id, 0);
+                            $fieldmodel->setFieldValue($color_id, $user->id, 'no');
                         }
                         return;
                     }
@@ -118,7 +133,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         $cookie = explode(':', $cookieValue);
         $default = 80; // init default grayscale value
         $gray = 0;
-        $module = $this->getSiteModules();
+        $list = $this->getSiteModules();
         // get default grayscale from first CG Template Switcher module
         foreach ($list as $module) {
             $module_params = $module->params;
@@ -194,5 +209,5 @@ CSS;
 
         return $found;
     }
-    
+
 }
