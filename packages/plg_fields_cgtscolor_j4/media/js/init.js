@@ -5,32 +5,38 @@
  * @author ConseilGouz 
  * 
  **/
-var plg_cgswitch_options;
+var plg_cgtscolor_options;
 
 document.addEventListener('DOMContentLoaded', function() {
 	if (typeof Joomla === 'undefined' || typeof Joomla.getOptions === 'undefined') {
 		console.error('Joomla.getOptions not found!\nThe Joomla core.js file is not being loaded.');
 		return;
 	}
-	plg_cgswitch_options = Joomla.getOptions('plg_fields_cgtemplateswitcher');
-	if (typeof plg_cgswitch_options !== 'undefined' ) {
-			go_plgswitch();
+	plg_cgtscolor_options = Joomla.getOptions('plg_fields_cgtscolor');
+	if (typeof plg_cgtscolor_options !== 'undefined' ) {
+			go_plgswitchcolor();
 	}
 });
-function go_plgswitch() {
-	document.getElementById("jform_com_fields_template_defaut").addEventListener( 'change', function(){
-		sortValue = this.selectedOptions[0].value;
-        cgplgswitch_cookie(sortValue);
-	});
+function go_plgswitchcolor() {
+	inputs = document.querySelectorAll(".cgtscolor input");
+    for(var i=0; i<inputs.length; i++) {
+        inputs[i].addEventListener( 'change', function(){
+            sortValue = this.value;
+            cgplgcolor_cookie(sortValue);
+        });
+    }
 }
-
-function cgplgswitch_cookie(b) {
+function cgplgcolor_cookie(b) {
 	var expires = "";
-	if (plg_cgswitch_options.cookie_duration > 0) {
+	if (plg_cgtscolor_options.cookie_duration > 0) {
 		var date = new Date();
-		date.setTime(date.getTime()+(parseInt(plg_cgswitch_options.cookie_duration)*24*60*60*1000));
+		date.setTime(date.getTime()+(parseInt(plg_cgtscolor_options.cookie_duration)*24*60*60*1000));
 		var expires = "; expires="+date.toGMTString();
 	}
+    gray = 0;
+    if (b != 'no') { 
+        gray = plg_cgtscolor_options.gray;
+    }
 	$secure = "";
 	if (window.location.protocol == "https:") $secure="secure;"; 
     // get current value and extract color info if any.
@@ -40,18 +46,11 @@ function cgplgswitch_cookie(b) {
     ));
     current = matches ? decodeURIComponent(matches[1]) : ''; 
     arr = current.split(':');
-    if (arr.length) {
-        val = b+':'+arr[1];
+    if (arr.length == 2) {
+        val = arr[0]+':'+gray;
     } else {
-        val = b+':0';
+        val = '0:'+gray;
     }
 	document.cookie = "cg_template="+val+expires+"; path=/; samesite=lax;"+$secure;
-    mod  = document.getElementById('CG_TS_Select');
-    if (!mod) return;
-    for (let i = 0; i < mod.length; i++) {
-       if (mod[i].value == b) { 
-            mod.selectedIndex = i;
-       }
-    }
 }
 

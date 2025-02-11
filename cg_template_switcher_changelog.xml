@@ -2,6 +2,17 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.3.0</version>
+        <note>
+            <item>Update : 11/02/2025</item>
+        </note>
+        <addition>
+            <item>Colors change button</item>
+        </addition>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.2.4</version>
         <note>
             <item>Update : 08/02/2025</item>

@@ -12,6 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\Database\DatabaseInterface;
 use ConseilGouz\Plugin\Fields\Cgtemplateswitcher\Helper\CGTemplateSwitcherHelper;
 
 class CgtemplateswitcherField extends FormField
@@ -26,11 +27,13 @@ class CgtemplateswitcherField extends FormField
 
         $app = Factory::getApplication();
 
-        $list = ModuleHelper::getModuleList();
-        $module_params = null;
+        $list = $this->getSiteModules();
+        $duration = 0;
         foreach ($list as $module) {
-            if ($module->module == 'mod_cg_template_switcher') {
-                $module_params = $module->params;
+            $module_params = $module->params;
+            $tmp_params = json_decode($module_params);
+            if (isset($tmp_params->cookie_duration)) {
+                $duration = $tmp_params->cookie_duration;
             }
         }
         /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
@@ -46,13 +49,6 @@ class CgtemplateswitcherField extends FormField
                 }
             }
         }
-        $duration = 0;
-        if ($module_params) {
-            $tmp_params = json_decode($module_params);
-            if (isset($tmp_params->cookie_duration)) {
-                $duration = $tmp_params->cookie_duration;
-            }
-        }
         $document->addScriptOptions(
             'plg_fields_cgtemplateswitcher',
             array('cookie_duration' => $duration )
@@ -62,4 +58,20 @@ class CgtemplateswitcherField extends FormField
 
         return $def_form;
     }
+    private function getSiteModules()
+    {
+        $module = 'mod_cg_template_switcher';
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from('#__modules');
+        $query->where('module = :module');
+        $query->where('published = 1');
+        $query->bind(':module', $module, \Joomla\Database\ParameterType::STRING);
+        $db->setQuery($query);
+        $found = $db->loadObjectList();
+
+        return $found;
+    }
+    
 }

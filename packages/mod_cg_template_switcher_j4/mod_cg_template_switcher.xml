@@ -2,23 +2,25 @@
 <extension version="4.0" type="module" method="upgrade" client="site">
 	<name>CG Template Switcher</name>
 	<author>ConseilGouz</author>
-	<creationDate>2025-02-08</creationDate>
+	<creationDate>2025-02-10</creationDate>
 	<copyright>Copyright (C) 2025 ConseilGouz. All rights reserved</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv2</license>
 	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
 	<authorUrl>www.conseilgouz.com</authorUrl>
-	<version>2.2.4</version>
+	<version>2.3.0</version>
 	<description>CG_XML_DESCRIPTION</description>
 	<namespace path="src">ConseilGouz\Module\CGTemplateSwitcher</namespace>
 	<changelogurl>https://raw.githubusercontent.com/conseilgouz/pkg_cg_template_switcher_j4/master/cg_template_switcher_changelog.xml</changelogurl>
 	<files>
 		<folder module="mod_cg_template_switcher">services</folder>
 		<filename>index.html</filename>
+        <folder>layouts</folder>
 		<folder>tmpl</folder>
 		<folder>src</folder>
 	</files>
 	<media destination="mod_cg_template_switcher" folder="media">
 		<folder>js</folder>
+        <folder>icons</folder>
         <folder>css</folder>
 		<filename>index.html</filename>
 	</media>
@@ -39,20 +41,31 @@
             <field name="version" type="version"  margintop="-3em" extension="mod_cg_template_switcher"/>
 			<field name="templatesall" 	type="radio" class="btn-group btn-group-yesno"	default="true" 
 				label="CG_TEMPLATES_ALL" description="CG_TEMPLATES_ALLDESC"
-				validate="templates"
-				>
+				validate="templates">
 				<option value="true">JYES</option>
 				<option value="false">JNO</option>
+                <option value="none">JNONE</option>
 			</field>		
 			<field showon="templatesall:false" name="templates" type="templatestyle" 
 				label="Templates" description="CG_TEMPLATESDESC" 
 				multiple="multiple" layout="joomla.form.field.groupedlist-fancy-select"/>
-			<field name="showpreview" 	type="radio" class="btn-group btn-group-yesno"	default="true" 
+			<field showon="templatesall!:none" name="showpreview" 	type="radio" class="btn-group btn-group-yesno"	default="true" 
 				label="CG_STYLE_PREVIEW" description="CG_STYLE_PREVIEWDESC"
 				>
 				<option value="true">JYES</option>
 				<option value="false">JNO</option>
-			</field>	
+			</field>
+			<field name="showcolor" 	type="radio" class="btn-group btn-group-yesno"	default="false" 
+				label="CG_STYLE_COLOR" description="CG_STYLE_COLORDESC"
+				>
+				<option value="true">JYES</option>
+				<option value="false">JNO</option>
+			</field>
+			<field 	showon="showcolor:true" name="grayscale" type="cgrange"  default="80" 
+                class="limits" unit="%"
+				label="CG_STYLE_GRAYSCALE" 	description="CG_STYLE_GRAYSCALEDESC" 
+				min="1" max="100" step="1"	/>
+            
 			<field name="autoswitch" 	type="radio" class="btn-group btn-group-yesno"	default="false" 
 				label="CG_STYLE_AUTO" description="CG_STYLE_AUTODESC"
 				>
