@@ -79,8 +79,16 @@
 				key_field="value"	value_field="value" 
                 >
 			</field>
-            <field showon="user_field:1" type="note" name="cg_note_enable" label="CG_NOTE2" heading="p" />
-            <field showon="user_field!:1" type="note" name="cg_note_disable" label="CG_NOTE3" heading="p" />
+			<field  name="color_field" type="sql" class="hidden" showon="cookie_duration:a"
+				label="" description=""
+                query="select f.id as id, f.state as value from #__fields f where f.context like 'com_user%' and f.type like 'cgtscolor' "
+				key_field="value"	value_field="value" 
+                >
+			</field>
+            <field showon="user_field:1" type="note" name="cg_note_enable" label="CG_NOTE2" />
+            <field showon="user_field!:1" type="note" name="cg_note_disable" label="CG_NOTE3" />
+            <field showon="color_field:1" type="note" name="cg_note_color_enable" label="CG_NOTE4" />
+            <field showon="color_field!:1" type="note" name="cg_note_color_disable" label="CG_NOTE5" />
 		    <field type="note" name="cg_note1" label="CG_NOTE1" heading="p" />
 			<field name="css" type="textarea" label="CG_CSS" description="CG_CSS_DESC" cols="40" rows="4" filter="raw" 
 				default=".CG_TS_Select {} .CG_TS_Img{max-width:100%} .CG_TS_OKBtn{} .CG_TS_CancelBtn{}"
