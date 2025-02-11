@@ -13,12 +13,16 @@ namespace Conseilgouz\Plugin\System\Cgstyle\Extension;
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Version;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Component\Fields\Administrator\Model\FieldModel;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
+use YOOtheme\ThemeLoader;
+use YOOtheme\Config as YooConfig;
+use YOOtheme\Event as YooEvent;
 
 use function YOOtheme\app;
 
@@ -108,10 +112,10 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                 if ($version >= "4") { // Joomla 4 and higher
                     $app->setTemplate($style);
                     if (strpos($style->template, 'yootheme') === 0) {
-                        $config = app(\YOOtheme\Config::class);
-                        app()->call([\YOOtheme\Theme\Joomla\ThemeLoader::class, 'initTheme']);
+                        $config = app(YooConfig::class);
+                        app()->call([ThemeLoader::class, 'initTheme']);
                         $config->set('theme.id', $style->id);
-                        \YOOtheme\Event::emit('theme.head');
+                        YooEvent::emit('theme.head');
                     }
                     if (strpos($style->template, 'astroid') === 0) {
                         \Astroid\Framework::getTemplate($style->id);
@@ -171,19 +175,19 @@ CSS;
         }
         // Make sure we have the `<html` opening tag
         $body = $app->getBody();
-        if (stripos($body, '<html') === false) {
+        if (stripos($body, '<body') === false) {
             return;
         }
         $class = " cgcolor ";
 
         $body = preg_replace_callback(
-            '#<body(.*)class\s*=\s*"(.*)"(.*)>#',
+            '#<body(.*?)class\s*=\s*"(.*?)"(.*?)>#',
             function ($matches) use ($class) {
                 return sprintf(
                     '<body%sclass="%s %s"%s>',
                     $matches[1],
-                    $matches[2],
                     $class,
+                    $matches[2],
                     $matches[3]
                 );
             },
