@@ -13,7 +13,6 @@ namespace Conseilgouz\Plugin\System\Cgstyle\Extension;
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Version;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
@@ -110,7 +109,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                     $app->setTemplate($style);
                     if (strpos($style->template, 'yootheme') === 0) {
                         $config = app(\YOOtheme\Config::class);
-                        app()->call([\YOOtheme\ThemeLoader::class, 'initTheme']);
+                        app()->call([\YOOtheme\Theme\Joomla\ThemeLoader::class, 'initTheme']);
                         $config->set('theme.id', $style->id);
                         \YOOtheme\Event::emit('theme.head');
                     }
