@@ -19,7 +19,7 @@ use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Component\Fields\Administrator\Model\FieldModel;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Event\SubscriberInterface;
-use YOOtheme\ThemeLoader;
+use YOOtheme\Theme\Joomla\ThemeLoader;
 use YOOtheme\Config as YooConfig;
 use YOOtheme\Event as YooEvent;
 
