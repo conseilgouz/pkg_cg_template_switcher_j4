@@ -13,7 +13,6 @@ namespace Conseilgouz\Plugin\System\Cgstyle\Extension;
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Version;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
@@ -46,38 +45,10 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         }
         $user = Factory::getApplication()->getIdentity();
         $template_id = 0;
-        $field_id = 0;
-        $color_id = 0;
-        if ($user->id) {
-            $test = FieldsHelper::getFields('com_users.user', $user);
-            foreach ($test as $field) {
-                if ($field->type == 'cgtemplateswitcher') {
-                    $template_id = $field->value;
-                    $field_id = $field->id;
-                }
-                if ($field->type == 'cgtscolor') {
-                    $template_id = $field->value;
-                    $color_id = $field->id;
-                }
-            }
-        }
+
         $cookieValue = $app->input->cookie->getRaw('cg_template', ':');
         $cookie = explode(':', $cookieValue);
-        if ($field_id && $cookie[0] &&
-            ($template_id != $cookie[0])) {
-            // need to update template switcher field value
-            $fieldmodel = new FieldModel(array('ignore_request' => true));
-            $fieldmodel->setFieldValue($field_id, $user->id, $cookie[0]);
-        }
-        if ($color_id) {
-            // need to update template switcher field value
-            $fieldmodel = new FieldModel(array('ignore_request' => true));
-            if ($cookie[1] > 0) {
-                $fieldmodel->setFieldValue($color_id, $user->id, 'yes');
-            } else {
-                $fieldmodel->setFieldValue($color_id, $user->id, 'no');
-            }
-        }
+
         if (sizeof($cookie) > 0) {
             $template_id = $cookie[0];
         }
@@ -100,9 +71,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                                     'path' => '/'];
                         $app->input->cookie->set('cg_template', "", $options);
                         if ($user->id) { // clean custom field
-                            $fieldmodel = new FieldModel(array('ignore_request' => true));
-                            $fieldmodel->setFieldValue($field_id, $user->id, 0);
-                            $fieldmodel->setFieldValue($color_id, $user->id, 'no');
+                            $this->clean_custom_fields($user);
                         }
                         return;
                     }
@@ -124,6 +93,30 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                     $app->setTemplate($style->template, $style->params);
                 }
             }
+        }
+    }
+    private function clean_custom_fields($user)
+    {
+        $test = FieldsHelper::getFields('com_users.user', $user);
+        $template_id = 0;
+        $field_id = 0;
+        $color_id = 0;
+        foreach ($test as $field) {
+            if ($field->type == 'cgtemplateswitcher') {
+                $template_id = $field->value;
+                $field_id = $field->id;
+            }
+            if ($field->type == 'cgtscolor') {
+                $template_id = $field->value;
+                $color_id = $field->id;
+            }
+        }
+        $fieldmodel = new FieldModel(array('ignore_request' => true));
+        if ($field_id) {
+            $fieldmodel->setFieldValue($field_id, $user->id, 0);
+        }
+        if ($color_id) {
+            $fieldmodel->setFieldValue($color_id, $user->id, 'no');
         }
     }
     public function onBeforeRender(\Joomla\Event\Event $event): void
@@ -151,8 +144,8 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         if (!$gray) { // empty or null : take default value
             $gray = $default;
         }
-        $customcss = $this->params->get('customcss','');
-        
+        $customcss = $this->params->get('customcss', '');
+
         $customCSS = <<< CSS
 .cgcolor {filter: grayscale($gray%) invert(100%)}
 .cgcolor img { filter: brightness(1.1) contrast(1.2) invert(100%) grayscale(0) }

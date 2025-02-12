@@ -9,8 +9,9 @@
 defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Component\Fields\Administrator\Model\FieldModel;
@@ -51,11 +52,13 @@ $auto = $params->get('autoswitch', 'false');
 $document->addScriptOptions(
     'mod_cg_template_switcher_'.$module->id,
     array('id' => $module->id,
-          'cookie_duration' => $params->get('cookie_duration', 0),'showpreview' => $params->get('showpreview', 'true'),
-          'autoswitch' => $auto,
-          'noimage' => Text::_('NOIMAGE'),'templates' => $templates_js,
-          'userfield' => $params->get('user_field', 'false'),
-          'grayscale' => $params->get('grayscale', '80')
+          'cookie_duration' => $params->get('cookie_duration', 0),
+          'showpreview' => $params->get('showpreview', 'true'),
+          'autoswitch'  => $auto,
+          'noimage'     => Text::_('NOIMAGE'),'templates' => $templates_js,
+          'userfield'   => $params->get('user_field', 'false'),
+          'grayscale'   => $params->get('grayscale', '80'),
+          'userid'      => $user->id
           )
 );
 if ((bool)$app->getConfig()->get('debug')) { // Mode debug

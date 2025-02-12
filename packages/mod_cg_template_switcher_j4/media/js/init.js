@@ -7,6 +7,7 @@
  **/
 var cgswitchmod = [];
 var CG_TS_Images = new Array();
+var once = [];
 document.addEventListener('DOMContentLoaded', function() {
 	if (typeof Joomla === 'undefined' || typeof Joomla.getOptions === 'undefined') {
 		console.error('Joomla.getOptions not found!\nThe Joomla core.js file is not being loaded.');
@@ -41,9 +42,15 @@ function go_switch(cgswoptions) {
             document.getElementById('cg_ts_form_'+id).submit();
 		});
 	}
-	let btn_color = document.getElementById("cg_color_btn_"+cgswoptions.id);
-	if (btn_color) {
-		btn_color.addEventListener('click',function() {
+    // may have multiple buttons with same id 
+	let btn_color = document.querySelectorAll("#cg_color_btn_"+cgswoptions.id);
+
+    for (let i = 0; i < btn_color.length; i++) {
+         btn_color[i].id = btn_color[i].id + i;
+         one = document.querySelector('#cg_color_btn_'+cgswoptions.id+i);
+ 		 one.addEventListener('click',function(e) {
+            e.stopPropagation();
+            e.preventDefault();
             let id = this.getAttribute('data');
             let img = this.style.backgroundImage;
             let color = 0;
@@ -156,6 +163,17 @@ function CG_TS_Cookie(id,b) {
                 plg.selectedIndex = i;
             }
         }
+    }
+    if (cgswitchmod[id].userid) { 
+        url = '?option=com_ajax&module=cg_template_switcher&user='+ cgswitchmod[id].userid+'&tmpl='+b+'&color='+color+'&format=json';
+        Joomla.request({
+			method : 'POST',
+			url : url,
+            onSuccess: function(data, xhr) {
+                console.log('Ajax OK');
+            },
+            onError: function(message) {console.log(message.responseText)}
+        })
     }
     if (cgswitchmod[id].autoswitch == 'true') {
         document.getElementById('cg_ts_form_'+id).submit();

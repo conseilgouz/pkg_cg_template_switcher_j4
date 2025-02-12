@@ -11,7 +11,10 @@ namespace ConseilGouz\Module\CGTemplateSwitcher\Site\Helper;
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
+use Joomla\Component\Fields\Administrator\Model\FieldModel;
 use Joomla\Database\DatabaseInterface;
 
 class CGTemplateSwitcherHelper
@@ -87,5 +90,43 @@ class CGTemplateSwitcherHelper
         $db->setQuery($query);
         $items = $db->loadObjectList();
         return $items;
+    }
+    // ==============================================    AJAX Request 	============================================================
+    public static function getAjax()
+    {
+        $input = Factory::getApplication()->input->request;
+        $userid = $input->getInt('user');
+        $tmpl = $input->getInt('tmpl');
+        $color = $input->getInt('color');
+        $user = Factory::getApplication()->getIdentity($userid);
+        $test = FieldsHelper::getFields('com_users.user', $user);
+        $template_id = 0;
+        $field_id = 0;
+        $color_id = 0;
+        foreach ($test as $field) {
+            if ($field->type == 'cgtemplateswitcher') {
+                $template_id = $field->value;
+                $field_id = $field->id;
+            }
+            if ($field->type == 'cgtscolor') {
+                $template_id = $field->value;
+                $color_id = $field->id;
+            }
+        }
+        if (($template_id) && ($template_id != $tmpl)) {
+            // need to update template switcher field value
+            $fieldmodel = new FieldModel(array('ignore_request' => true));
+            $fieldmodel->setFieldValue($field_id, $userid, $tmpl);
+        }
+        if ($color_id) {
+            $fieldmodel = new FieldModel(array('ignore_request' => true));
+            if ($color > 0) {
+                $fieldmodel->setFieldValue($color_id, $userid, 'yes');
+            } else {
+                $fieldmodel->setFieldValue($color_id, $userid, 'no');
+            }
+        }
+
+        return new JsonResponse('ok');
     }
 }
