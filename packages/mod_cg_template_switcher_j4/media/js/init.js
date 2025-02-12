@@ -128,7 +128,7 @@ function CG_TS_Cookie_Del(id) {
 function CG_TS_Cookie(id,b) {
 	var expires = "";
     // get color choice    
-    let btn_color = document.getElementById("cg_color_btn_"+id);
+    let btn_color = document.getElementById("cg_color_btn_"+id+0); // assume one button
     color = 0;
     if (btn_color) { // no color btn in current module
        let img = btn_color.style.backgroundImage;
