@@ -141,7 +141,7 @@ function CG_TS_Cookie(id,b) {
         my = document.cookie.match(new RegExp(
             "(?:^|; )" + 'cg_template'.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
             ))
-        if (my.length > 0) {
+        if (my && (my.length > 0)) {
             mycolor = my[1].split(':');
             color = mycolor[1];
         }
