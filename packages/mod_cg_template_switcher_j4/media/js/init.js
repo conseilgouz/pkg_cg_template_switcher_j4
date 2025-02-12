@@ -123,6 +123,19 @@ function CG_TS_Cookie_Del(id) {
 	$secure = "";
 	if (window.location.protocol == "https:") $secure="secure;"; 
 	document.cookie = "cg_template=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;samesite=lax;"+$secure;
+    
+    if (cgswitchmod[id].userid) { 
+        url = '?option=com_ajax&module=cg_template_switcher&user='+ cgswitchmod[id].userid+'&tmpl='+0+'&color='+0+'&format=json';
+        Joomla.request({
+			method : 'POST',
+			url : url,
+            onSuccess: function(data, xhr) {
+                console.log('Ajax OK');
+            },
+            onError: function(message) {console.log(message.responseText)}
+        })
+    }
+    
 	document.getElementById('cg_ts_form_'+id).submit();
 }
 function CG_TS_Cookie(id,b) {
