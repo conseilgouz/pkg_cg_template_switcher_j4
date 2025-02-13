@@ -67,8 +67,8 @@
 				>
 				<option value="false">JNO</option>
 				<option value="tmpl">CG_STYLE_TMPL</option>
-				<option value="color">CG_STYLE_COLOR</option>
 				<option value="bootstrap">CG_STYLE_BOOTSTRAP</option>
+				<option value="color">CG_STYLE_COLOR</option>
 			</field>
 			<field 	showon="oneclick:color" name="grayscale" type="cgrange"  default="80" 
                 class="limits" unit="%"
