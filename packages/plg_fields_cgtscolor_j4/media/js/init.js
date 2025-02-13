@@ -33,9 +33,13 @@ function cgplgcolor_cookie(b) {
 		date.setTime(date.getTime()+(parseInt(plg_cgtscolor_options.cookie_duration)*24*60*60*1000));
 		var expires = "; expires="+date.toGMTString();
 	}
-    gray = 0;
+    one = 0;
     if (b != 'no') { 
-        gray = plg_cgtscolor_options.gray;
+        if (plg_cgtscolor_options.oneclick == "color") {
+            one = plg_cgtscolor_options.gray;
+        } else if (plg_cgtscolor_options.oneclick != "none") {
+            one = plg_cgtscolor_options.oneclick;
+        }
     }
 	$secure = "";
 	if (window.location.protocol == "https:") $secure="secure;"; 
@@ -47,9 +51,9 @@ function cgplgcolor_cookie(b) {
     current = matches ? decodeURIComponent(matches[1]) : ''; 
     arr = current.split(':');
     if (arr.length == 2) {
-        val = arr[0]+':'+gray;
+        val = arr[0]+':'+one;
     } else {
-        val = '0:'+gray;
+        val = '0:'+one;
     }
 	document.cookie = "cg_template="+val+expires+"; path=/; samesite=lax;"+$secure;
 }

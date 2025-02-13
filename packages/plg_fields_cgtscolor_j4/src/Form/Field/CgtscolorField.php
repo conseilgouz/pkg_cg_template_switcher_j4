@@ -30,11 +30,15 @@ class CgtscolorField extends FormField
         $module_params = null;
         $duration = 0;
         $gray = 0;
+        $oneclick = 'false';
         foreach ($list as $module) {
             $module_params = $module->params;
             $tmp_params = json_decode($module_params);
             if (!$duration && isset($tmp_params->cookie_duration)) {
                 $duration = $tmp_params->cookie_duration;
+            }
+            if (isset($tmp_params->oneclick) && ($tmp_params->oneclick != 'false')) {
+                $oneclick = $tmp_params->oneclick;
             }
             if (!$gray && isset($tmp_params->grayscale)) {
                 $gray = $tmp_params->grayscale;
@@ -42,7 +46,7 @@ class CgtscolorField extends FormField
         }
         $document->addScriptOptions(
             'plg_fields_cgtscolor',
-            array('cookie_duration' => (int)$duration,'gray' => (int)$gray )
+            array('cookie_duration' => (int)$duration,'oneclick' => $oneclick,'gray' => (int)$gray )
         );
 
         $def = '';

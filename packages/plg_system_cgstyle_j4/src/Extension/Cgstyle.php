@@ -138,9 +138,12 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                 $default = $tmp_params->grayscale;
             }
         }
+        $graycss = "";
         if (isset($cookie[1])) {
             if (is_integer($cookie[1])) {// grayscale in cookie ?
                 $gray = (int)$cookie[1];
+                $graycss = ".cgcolor {filter: grayscale($gray%) invert(100%)}
+.cgcolor img { filter: brightness(1.1) contrast(1.2) invert(100%) grayscale(0) }";
             } else {
                 return;
             }
@@ -151,8 +154,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         $customcss = $this->params->get('customcss', '');
 
         $customCSS = <<< CSS
-.cgcolor {filter: grayscale($gray%) invert(100%)}
-.cgcolor img { filter: brightness(1.1) contrast(1.2) invert(100%) grayscale(0) }
+$graycss
 $customcss
 CSS;
 
@@ -176,7 +178,9 @@ CSS;
             $this->addBSHeader();
             return;
         }
-
+        if (($cookie[1] == 'tmpl') || !(int)$cookie[1]) {
+            return;
+        }
         // Make sure we have the `<html` opening tag
         $body = $app->getBody();
         if (stripos($body, '<body') === false) {

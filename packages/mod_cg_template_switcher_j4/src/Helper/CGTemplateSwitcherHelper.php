@@ -97,7 +97,7 @@ class CGTemplateSwitcherHelper
         $input = Factory::getApplication()->input->request;
         $userid = $input->getInt('user');
         $tmpl = $input->getInt('tmpl');
-        $color = $input->getInt('color');
+        $color = $input->getRaw('color');
         $user = Factory::getApplication()->getIdentity($userid);
         $test = FieldsHelper::getFields('com_users.user', $user);
         $template_id = 0;
@@ -109,7 +109,6 @@ class CGTemplateSwitcherHelper
                 $field_id = $field->id;
             }
             if ($field->type == 'cgtscolor') {
-                $template_id = $field->value;
                 $color_id = $field->id;
             }
         }
@@ -120,10 +119,10 @@ class CGTemplateSwitcherHelper
         }
         if ($color_id) {
             $fieldmodel = new FieldModel(array('ignore_request' => true));
-            if ($color > 0) {
-                $fieldmodel->setFieldValue($color_id, $userid, 'yes');
-            } else {
+            if ($color == 0) {
                 $fieldmodel->setFieldValue($color_id, $userid, 'no');
+            } else {
+                $fieldmodel->setFieldValue($color_id, $userid, 'yes');
             }
         }
 
