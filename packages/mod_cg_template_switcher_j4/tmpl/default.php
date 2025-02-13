@@ -58,6 +58,8 @@ $document->addScriptOptions(
           'noimage'     => Text::_('NOIMAGE'),'templates' => $templates_js,
           'userfield'   => $params->get('user_field', 'false'),
           'grayscale'   => $params->get('grayscale', '80'),
+          'oneclick'   => $params->get('oneclick', 'false'),
+          'onetmpl'   => $params->get('onetmpl', 'false'),
           'userid'      => $user->id
           )
 );
@@ -128,10 +130,10 @@ if ($user->id) {
 		<?php } ?>
 	</div>
     <?php } ?>
-    <?php if ($params->get('showcolor', 'false') == 'true') { ?>    
-    <div id="CG_COLOR_<?php echo $module->id;?>" style="text-align:center;min-width:4em">
-        <input type="button" class="button CG_COLOR_BTN" data="<?php echo $module->id;?>" 
-             id="cg_color_btn_<?php echo $module->id;?>"  title="<?php echo Text::_('CGSWITCHCOLOR'); ?>"
+    <?php if ($params->get('oneclick', 'false') != 'false') { ?>    
+    <div id="CG_ONECLICK_<?php echo $module->id;?>" style="text-align:center;min-width:4em">
+        <input type="button" class="button CG_ONECLICK_BTN" data="<?php echo $module->id;?>" 
+             id="cg_oneclick_btn_<?php echo $module->id;?>"  title="<?php echo Text::_('CGSWITCHCOLOR'); ?>"
              style="width:3em;background-image : url('<?php echo URI::base(true).'/'.$modulefield;?>icons/<?php echo $color_img;?>');background-position: center;background-size:100% 100%;" >
     </div>
     <?php } ?>

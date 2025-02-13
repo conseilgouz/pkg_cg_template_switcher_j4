@@ -138,8 +138,12 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                 $default = $tmp_params->grayscale;
             }
         }
-        if (isset($cookie[1])) {// grayscale in cookie ?
-            $gray = (int)$cookie[1];
+        if (isset($cookie[1])) {
+            if (is_integer($cookie[1])) {// grayscale in cookie ?
+                $gray = (int)$cookie[1];
+            } else {
+                return;
+            }
         }
         if (!$gray) { // empty or null : take default value
             $gray = $default;
@@ -165,9 +169,14 @@ CSS;
         }
         $cookieValue = $app->input->cookie->getRaw('cg_template', ':');
         $cookie = explode(':', $cookieValue);
-        if ((sizeof($cookie) < 2) || ((int)$cookie[1] == 0)) { // no color change
+        if ((sizeof($cookie) < 2) || ($cookie[1] == 0)) { // no color change
             return;
         }
+        if ($cookie[1] == "bootstrap") {
+            $this->addBSHeader();
+            return;
+        }
+
         // Make sure we have the `<html` opening tag
         $body = $app->getBody();
         if (stripos($body, '<body') === false) {
@@ -207,5 +216,26 @@ CSS;
 
         return $found;
     }
+    private function addBSHeader()
+    {
+        $body = $this->getApplication()->getBody();
+        if (stripos($body, '<html') === false) {
+            return;
+        }
+        $bs = 'data-bs-theme="dark"';
 
+        $body = preg_replace_callback(
+            '#<html(.*?)>#',
+            function ($matches) use ($bs) {
+                return sprintf(
+                    '<html %s %s>',
+                    $bs,
+                    $matches[1],
+                );
+            },
+            $body
+        );
+
+        $this->getApplication()->setBody($body);
+    }
 }

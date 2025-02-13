@@ -47,7 +47,7 @@
                 <option value="none">JNONE</option>
 			</field>		
 			<field showon="templatesall:false" name="templates" type="templatestyle" 
-				label="Templates" description="CG_TEMPLATESDESC" 
+				label="CG_TEMPLATES" description="CG_TEMPLATESDESC" 
 				multiple="multiple" layout="joomla.form.field.groupedlist-fancy-select"/>
 			<field showon="templatesall!:none" name="showpreview" 	type="radio" class="btn-group btn-group-yesno"	default="true" 
 				label="CG_STYLE_PREVIEW" description="CG_STYLE_PREVIEWDESC"
@@ -55,23 +55,28 @@
 				<option value="true">JYES</option>
 				<option value="false">JNO</option>
 			</field>
-			<field name="showcolor" 	type="radio" class="btn-group btn-group-yesno"	default="false" 
-				label="CG_STYLE_COLOR" description="CG_STYLE_COLORDESC"
-				>
-				<option value="true">JYES</option>
-				<option value="false">JNO</option>
-			</field>
-			<field 	showon="showcolor:true" name="grayscale" type="cgrange"  default="80" 
-                class="limits" unit="%"
-				label="CG_STYLE_GRAYSCALE" 	description="CG_STYLE_GRAYSCALEDESC" 
-				min="1" max="100" step="1"	/>
-            
-			<field name="autoswitch" 	type="radio" class="btn-group btn-group-yesno"	default="false" 
+			<field name="autoswitch" showon="templatesall!:none"
+                type="radio" class="btn-group btn-group-yesno"	default="false" 
 				label="CG_STYLE_AUTO" description="CG_STYLE_AUTODESC"
 				>
 				<option value="true">JYES</option>
 				<option value="false">JNO</option>
 			</field>	
+			<field name="oneclick" 	type="radio" class="btn-group"	default="false" 
+				label="CG_STYLE_ONECLICK" description="CG_STYLE_ONECLICKDESC"
+				>
+				<option value="false">JNO</option>
+				<option value="tmpl">CG_STYLE_TMPL</option>
+				<option value="color">CG_STYLE_COLOR</option>
+				<option value="bootstrap">CG_STYLE_BOOTSTRAP</option>
+			</field>
+			<field 	showon="oneclick:color" name="grayscale" type="cgrange"  default="80" 
+                class="limits" unit="%"
+				label="CG_STYLE_GRAYSCALE" 	description="CG_STYLE_GRAYSCALEDESC" 
+				min="1" max="100" step="1"	/>
+			<field 	showon="oneclick:tmpl" name="onetmpl"  type="templatestyle" 
+				label="CG_STYLE_TMPL" 	description="CG_STYLE_TMPLDESC" 
+				/>
 			<field  name="cookie_duration" type="text" default="0" label="COOKIE_DURATION" description="COOKIE_DURATIONDESC" size="3" maxlength="3"/>
 			<field  name="user_field" type="sql" class="hidden"	
 				label="CG_STYLE_USER" description="CG_STYLE_USERDESC"

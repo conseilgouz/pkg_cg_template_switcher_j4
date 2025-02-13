@@ -43,30 +43,34 @@ function go_switch(cgswoptions) {
 		});
 	}
     // may have multiple buttons with same id 
-	let btn_color = document.querySelectorAll("#cg_color_btn_"+cgswoptions.id);
+	let btn_color = document.querySelectorAll("#cg_oneclick_btn_"+cgswoptions.id);
 
     for (let i = 0; i < btn_color.length; i++) {
          btn_color[i].id = btn_color[i].id + i;
-         one = document.querySelector('#cg_color_btn_'+cgswoptions.id+i);
+         one = document.querySelector('#cg_oneclick_btn_'+cgswoptions.id+i);
  		 one.addEventListener('click',function(e) {
             e.stopPropagation();
             e.preventDefault();
             let id = this.getAttribute('data');
             let img = this.style.backgroundImage;
-            let color = 0;
             let body = document.querySelector("body");
+            let html = document.querySelector("html");
             if (img.indexOf('sun.svg') > 0) {
                 img = img.replace('sun.svg','moon-stars.svg');
-                //html.setAttribute('data-bs-theme',"dark");
-                body.classList.add('cgcolor');
-                color = 1;
+                if (cgswitchmod[id].oneclick == 'bootstrap') {
+                    html.setAttribute('data-bs-theme',"dark");
+                }
+                if (cgswitchmod[id].oneclick == 'color') {
+                    body.classList.add('cgcolor');
+                }
             } else {
-                //html.setAttribute('data-bs-theme',"");
+                if (cgswitchmod[id].oneclick == 'bootstrap') {
+                    html.setAttribute('data-bs-theme',"");
+                }
                 img = img.replace('moon-stars.svg','sun.svg');
                 body.classList.remove('cgcolor');
-                color = 0;
             }   
-            btn  = document.querySelectorAll('.CG_COLOR_BTN');
+            btn  = document.querySelectorAll('.CG_ONECLICK_BTN');
             for (let i = 0; i < btn.length; i++) {
                 btn[i].style.backgroundImage = img;
             }
@@ -141,16 +145,25 @@ function CG_TS_Cookie_Del(id) {
 function CG_TS_Cookie(id,b) {
 	var expires = "";
     // get color choice    
-    let btn_color = document.getElementById("cg_color_btn_"+id+0); // assume one button
+    let btn_oneclick= document.getElementById("cg_oneclick_btn_"+id+0); // assume one button
     color = 0;
-    if (btn_color) { // no color btn in current module
-       let img = btn_color.style.backgroundImage;
+    if (btn_oneclick) { // no one-click btn in current module
+       let img = btn_oneclick.style.backgroundImage;
        if (img.indexOf('sun.svg') > 0) {
           color = 0;
        } else {
-          color = cgswitchmod[id].grayscale;
+          if (cgswitchmod[id].oneclick == 'bootstrap') {
+              color = "bootstrap";
+          }
+          if (cgswitchmod[id].oneclick == 'tmpl') {
+              color = "tmpl";
+              b = cgswitchmod[id].onetmpl;
+          }
+          if (cgswitchmod[id].oneclick == 'color') {
+             color = cgswitchmod[id].grayscale;
+          }
        }
-    } else { // check if cookie color value
+    } else { // check if cookie one-click value
         my = document.cookie.match(new RegExp(
             "(?:^|; )" + 'cg_template'.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
             ))
@@ -158,7 +171,9 @@ function CG_TS_Cookie(id,b) {
             mycolor = my[1].split(':');
             color = mycolor[1];
         }
-    
+        if ((color == 'tmpl') || (color== 'bootstrap')) {
+            color = 0;
+        }
     }
 	if (cgswitchmod[id].cookie_duration > 0) {
 		var date = new Date();
@@ -188,7 +203,7 @@ function CG_TS_Cookie(id,b) {
             onError: function(message) {console.log(message.responseText)}
         })
     }
-    if (cgswitchmod[id].autoswitch == 'true') {
+    if ((cgswitchmod[id].autoswitch == 'true') || (cgswitchmod[id].oneclick == 'tmpl')){
         document.getElementById('cg_ts_form_'+id).submit();
     }
 }
