@@ -129,6 +129,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         $cookie = explode(':', $cookieValue);
         $default = 80; // init default grayscale value
         $gray = 0;
+        $invert = 100;
         $list = $this->getSiteModules();
         // get default grayscale from first CG Template Switcher module
         foreach ($list as $module) {
@@ -137,20 +138,21 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
             if (isset($tmp_params->grayscale) && $tmp_params->grayscale) {
                 $default = $tmp_params->grayscale;
             }
+            if (isset($tmp_params->invert) && $tmp_params->invert) {
+                $invert = $tmp_params->invert;
+            }
         }
         $graycss = "";
         if (isset($cookie[1])) {
-            if (is_integer($cookie[1])) {// grayscale in cookie ?
+            if ((int)$cookie[1]) {// grayscale in cookie ?
                 $gray = (int)$cookie[1];
-                $graycss = ".cgcolor {filter: grayscale($gray%) invert(100%)}
-.cgcolor img { filter: brightness(1.1) contrast(1.2) invert(100%) grayscale(0) }";
-            } else {
-                return;
             }
         }
         if (!$gray) { // empty or null : take default value
             $gray = $default;
         }
+        $graycss = ".cgcolor {filter: grayscale($gray%) invert($invert%)}
+.cgcolor img { filter: brightness(1.1) contrast(1.2) invert($invert%) grayscale(0) }";
         $customcss = $this->params->get('customcss', '');
 
         $customCSS = <<< CSS
