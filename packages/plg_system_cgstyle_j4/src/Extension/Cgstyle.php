@@ -54,7 +54,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         }
         if ($template_id) {
             $db = $this->getDatabase();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             $query->select('*');
             $query->from('#__template_styles');
             $query->where('client_id = 0');
@@ -211,7 +211,7 @@ CSS;
     {
         $module = 'mod_cg_template_switcher';
         $db = $this->getDatabase();
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*');
         $query->from('#__modules');
         $query->where('module = :module');

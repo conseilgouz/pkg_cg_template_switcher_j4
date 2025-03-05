@@ -37,7 +37,7 @@ class plgfieldscgtemplateswitcherInstallerScript
 		$this->loadLanguage();
         
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('*');
         $query->from('#__fields');
         $query->where('type = ' . $db->quote('cgtemplateswitcher'));
@@ -49,7 +49,7 @@ class plgfieldscgtemplateswitcherInstallerScript
             return;
         }
         // delete field values
-        $query   = $db->getQuery(true);
+        $query   = $db->createQuery();
         $query->delete($db->quoteName('#__fields_values'))
               ->where($db->quoteName('field_id') . ' = :fieldid')
               ->bind(':fieldid', $found->id, \Joomla\Database\ParameterType::INTEGER);
@@ -62,7 +62,7 @@ class plgfieldscgtemplateswitcherInstallerScript
         );
         $fields = array($db->qn('state') . ' = -2');
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__fields'))->set($fields)->where($conditions);
         $db->setQuery($query);
         try {
@@ -109,7 +109,7 @@ class plgfieldscgtemplateswitcherInstallerScript
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         //---------------- remove obsolete update sites -------------
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->delete('#__update_sites')
             ->where($db->quoteName('location') . ' like "%432473037d.url-de-test.ws/%"');
         $db->setQuery($query);
@@ -122,7 +122,7 @@ class plgfieldscgtemplateswitcherInstallerScript
         );
         $fields = array($db->qn('enabled') . ' = 1');
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->update($db->quoteName('#__extensions'))->set($fields)->where($conditions);
         $db->setQuery($query);
         try {
@@ -135,7 +135,7 @@ class plgfieldscgtemplateswitcherInstallerScript
     private function check_field()
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query->select('id');
         $query->from('#__fields');
         $query->where('type = ' . $db->quote('cgtemplateswitcher'));
@@ -220,7 +220,7 @@ class plgfieldscgtemplateswitcherInstallerScript
             JPATH_PLUGINS . '/system/' . $this->installerName,
         ]);
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->delete('#__extensions')
             ->where($db->quoteName('element') . ' = ' . $db->quote($this->installerName))
             ->where($db->quoteName('folder') . ' = ' . $db->quote('system'))

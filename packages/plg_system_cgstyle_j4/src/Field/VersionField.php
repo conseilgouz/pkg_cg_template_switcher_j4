@@ -1,11 +1,10 @@
 <?php
 /**
  * @package CG template switcher Module
- * @version 2.1.0
  * @subpackage  system.cg_style
  *
- * @copyright   Copyright (C) 2023 Conseilgouz. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2025 Conseilgouz. All rights reserved.
+ * @license     GNU General Public License version 3 or later; see LICENSE.txt
  *
  */
 
@@ -40,7 +39,7 @@ class VersionField extends FormField
 
         $jinput = Factory::getApplication()->input;
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
         $query
             ->select($db->quoteName('manifest_cache'))
             ->from($db->quoteName('#__extensions'))
