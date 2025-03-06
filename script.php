@@ -133,18 +133,18 @@ class pkg_CGTemplateSwitcherInstallerScript
 		}
 		// remove obsolete update sites
 		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->createQuery()
+		$query = $db->getQuery(true)
 			->delete('#__update_sites')
 			->where($db->quoteName('location') . ' like "%432473037d.url-de-test.ws/%"');
 		$db->setQuery($query);
 		$db->execute();
 		// Simple Isotope is now on Github
-		$query = $db->createQuery()
+		$query = $db->getQuery(true)
 			->delete('#__update_sites')
 			->where($db->quoteName('location') . ' like "%conseilgouz.com/updates/mod_cg_template%"');
 		$db->setQuery($query);
 		$db->execute();
-		$query = $db->createQuery()
+		$query = $db->getQuery(true)
 			->delete('#__update_sites')
 			->where($db->quoteName('location') . ' like "%conseilgouz.com/updates/pkg_cg_template%"');
 		$db->setQuery($query);
@@ -161,7 +161,7 @@ class pkg_CGTemplateSwitcherInstallerScript
         );
         $fields = array($db->qn('enabled') . ' = 1');
 
-        $query = $db->createQuery();
+        $query = $db->getQuery(true);
 		$query->update($db->quoteName('#__extensions'))->set($fields)->where($conditions);
 		$db->setQuery($query);
         try {
@@ -215,7 +215,7 @@ class pkg_CGTemplateSwitcherInstallerScript
 			sprintf("%s/modules/mod_%s/script.php", JPATH_SITE, $this->extname)
 		]);
 		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->createQuery()
+		$query = $db->getQuery(true)
 			->delete('#__extensions')
 			->where($db->quoteName('element') . ' = ' . $db->quote($this->installerName))
 			->where($db->quoteName('folder') . ' = ' . $db->quote('system'))

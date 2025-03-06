@@ -41,7 +41,7 @@ class CGTemplateSwitcherHelper
 		$clientId = 0;
 		// Create a new query object.
 		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->createQuery();
+		$query = $db->getQuery(true);
 		// Select the required fields from the table.
 		$query->select(
 				'a.id, a.template, a.title, a.home, a.client_id, l.title AS language_title, l.image as image, l.sef AS language_sef'

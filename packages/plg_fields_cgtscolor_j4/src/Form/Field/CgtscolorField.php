@@ -76,7 +76,7 @@ class CgtscolorField extends FormField
     {
         $module = 'mod_cg_template_switcher';
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->createQuery();
+        $query = $db->getQuery(true);
         $query->select('*');
         $query->from('#__modules');
         $query->where('module = :module');
