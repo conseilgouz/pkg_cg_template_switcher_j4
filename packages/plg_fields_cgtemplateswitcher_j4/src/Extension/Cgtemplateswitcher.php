@@ -11,13 +11,15 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\Component\Fields\Administrator\Plugin\FieldsPlugin;
-
+use Joomla\Database\DatabaseAwareTrait;
 /**
  * Fields Text Plugin
  *
  */
 class Cgtemplateswitcher extends FieldsPlugin
 {
+    use DatabaseAwareTrait;
+
     public function onCustomFieldsPrepareDom($field, \DOMElement $parent, Form $form)
     {
         $fieldNode = parent::onCustomFieldsPrepareDom($field, $parent, $form);

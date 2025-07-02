@@ -12,6 +12,7 @@ use Joomla\CMS\Version;
 use Joomla\CMS\Log\Log;
 use Joomla\Component\Fields\Administrator\Model\FieldModel;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Event\DispatcherInterface;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 
@@ -147,6 +148,7 @@ class plgfieldscgtscolorInstallerScript
             return;
         }
         $field = new FieldModel(array('ignore_request' => true));
+        $field->setDispatcher(Factory::getContainer()->get(DispatcherInterface::class)); // Joomla 6
         $data = [];
         $data['id']     = 0;
         $data['type'] = 'cgtscolor';

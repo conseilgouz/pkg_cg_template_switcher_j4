@@ -2,6 +2,18 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.5.0</version>
+        <note>
+            <item>Update : 02/07/2025</item>
+        </note>
+        <fix>
+            <item>Joomla 6  compatibility : dispatcher error in fields installation</item>
+            <item>Joomla 6 : JPATH_PLATFORM deprecated</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.4.1</version>
         <note>
             <item>Update : 06/03/2025</item>
