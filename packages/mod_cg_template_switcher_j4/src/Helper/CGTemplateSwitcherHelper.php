@@ -94,7 +94,7 @@ class CGTemplateSwitcherHelper
     // ==============================================    AJAX Request 	============================================================
     public static function getAjax()
     {
-        $input = Factory::getApplication()->input->request;
+        $input = Factory::getApplication()->getInput()->request;
         $userid = $input->getInt('user');
         $tmpl = $input->getInt('tmpl');
         $color = $input->getRaw('color');

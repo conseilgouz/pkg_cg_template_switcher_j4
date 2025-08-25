@@ -46,7 +46,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         $user = Factory::getApplication()->getIdentity();
         $template_id = 0;
 
-        $cookieValue = $app->input->cookie->getRaw('cg_template', ':');
+        $cookieValue = $app->getInput()->cookie->getRaw('cg_template', ':');
         $cookie = explode(':', $cookieValue);
 
         if (sizeof($cookie) > 0) {
@@ -69,7 +69,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
                         $app->enqueueMessage(Text::_('CG_WRONG_LANGUAGE'), 'error');
                         $options = ['expires' => 'Thu, 01 Jan 1970 00:00:00 UTC',
                                     'path' => '/'];
-                        $app->input->cookie->set('cg_template', "", $options);
+                        $app->getInput()->cookie->set('cg_template', "", $options);
                         if ($user->id) { // clean custom field
                             $this->clean_custom_fields($user);
                         }
@@ -125,7 +125,7 @@ final class Cgstyle extends CMSPlugin implements SubscriberInterface
         if ($app->isClient('administrator')) { // run only on frontend
             return;
         }
-        $cookieValue = $app->input->cookie->getRaw('cg_template', ':');
+        $cookieValue = $app->getInput()->cookie->getRaw('cg_template', ':');
         $cookie = explode(':', $cookieValue);
         $default = 80; // init default grayscale value
         $gray = 0;
@@ -171,7 +171,7 @@ CSS;
         if ($app->isClient('administrator')) { // run only on frontend
             return;
         }
-        $cookieValue = $app->input->cookie->getRaw('cg_template', ':');
+        $cookieValue = $app->getInput()->cookie->getRaw('cg_template', ':');
         $cookie = explode(':', $cookieValue);
         if ((sizeof($cookie) < 2) || ($cookie[1] == 0)) { // no color change
             return;

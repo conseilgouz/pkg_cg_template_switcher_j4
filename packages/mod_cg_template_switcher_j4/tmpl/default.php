@@ -79,7 +79,7 @@ if (empty($templates->options)) { ?>
 }
 $curr_template = $app->getTemplate(true);  // Current template
 
-$cookieValue = $app->input->cookie->getRaw('cg_template', ':');	 // template ix/color mode from cookie
+$cookieValue = $app->getInput()->cookie->getRaw('cg_template', ':');	 // template ix/color mode from cookie
 $cookie = explode(':', $cookieValue);
 $curr_template_idx = $cookie[0];
 $color = 0;
