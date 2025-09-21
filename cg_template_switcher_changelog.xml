@@ -2,6 +2,18 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.5.2</version>
+        <note>
+            <item>Update : 21/09/2025</item>
+        </note>
+        <fix>
+            <item>Joomla 6 : addscript removed</item>
+            <item>Use ConseilGouz Library</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.5.1</version>
         <note>
             <item>Update : 25/08/2025</item>

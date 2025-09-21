@@ -8,10 +8,10 @@
 // No direct access to this file
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Version;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 
 class pkg_CGTemplateSwitcherInstallerScript
 {
@@ -19,6 +19,7 @@ class pkg_CGTemplateSwitcherInstallerScript
 	private $min_php_version         = '7.4';
 	private $extname                 = 'cg_template_switcher';
 	private $dir           = null;
+    private $newlib_version	         = '';
 	public function __construct()
 	{
 		$this->dir = __DIR__;
@@ -67,6 +68,23 @@ class pkg_CGTemplateSwitcherInstallerScript
 			$this->postinstall_cleanup();
 			$this->postinstall_enable_plugin();
 		}
+        if (!$this->checkLibrary('conseilgouz')) { // need library installation
+            $ret = $this->installPackage('lib_conseilgouz');
+            if ($ret) {
+                Factory::getApplication()->enqueueMessage('ConseilGouz Library ' . $this->newlib_version . ' installed', 'notice');
+            }
+        }
+        // delete obsolete version.php file
+        $this->delete([
+            JPATH_SITE . '/modules/mod_'.$this->extname.'/src/Field/VersionField.php',
+            JPATH_SITE . '/modules/mod_'.$this->extname.'/src/Field/CgrangeField.php',
+            JPATH_SITE . '/modules/mod_'.$this->extname.'/layouts/cgrange.php',
+            JPATH_SITE . '/media/mod_'.$this->extname.'/js/cgrange.js',
+            JPATH_SITE . '/media/mod_'.$this->extname.'/css/cgrange.css',
+            JPATH_SITE . '/plugins/fields/cgtemplateswitcher/src/Field/VersionField.php',
+            JPATH_SITE . '/plugins/fields/cgtscolor/src/Field/VersionField.php',
+            JPATH_SITE . '/plugins/system/cgstyle/src/Field/VersionField.php',
+        ]);
 
 		return true;
     }
@@ -204,6 +222,42 @@ class pkg_CGTemplateSwitcherInstallerScript
 
 		return true;
 	}
+    private function checkLibrary($library)
+    {
+        $file = $this->dir.'/lib_conseilgouz/conseilgouz.xml';
+        if (!is_file($file)) {// library not installed
+            return false;
+        }
+        $xml = simplexml_load_file($file);
+        $this->newlib_version = $xml->version;
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $conditions = array(
+             $db->qn('type') . ' = ' . $db->q('library'),
+             $db->qn('element') . ' = ' . $db->quote($library)
+            );
+        $query = $db->getQuery(true)
+                ->select('manifest_cache')
+                ->from($db->quoteName('#__extensions'))
+                ->where($conditions);
+        $db->setQuery($query);
+        $manif = $db->loadObject();
+        if ($manif) {
+            $manifest = json_decode($manif->manifest_cache);
+            if ($manifest->version >= $this->newlib_version) { // compare versions
+                return true; // library ok
+            }
+        }
+        return false; // need library
+    }
+    private function installPackage($package)
+    {
+        $tmpInstaller = new Joomla\CMS\Installer\Installer();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $tmpInstaller->setDatabase($db);
+        $installed = $tmpInstaller->install($this->dir . '/' . $package);
+        return $installed;
+    }
+    
 	private function uninstallInstaller()
 	{
 		if ( ! is_dir(JPATH_PLUGINS . '/system/' . $this->installerName)) {

@@ -2,12 +2,12 @@
 <extension version="4.0" type="module" method="upgrade" client="site">
 	<name>CG Template Switcher</name>
 	<author>ConseilGouz</author>
-	<creationDate>2025-08-25</creationDate>
+	<creationDate>2025-09-21</creationDate>
 	<copyright>Copyright (C) 2025 ConseilGouz. All rights reserved</copyright>
 	<license>https://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv2</license>
 	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
 	<authorUrl>www.conseilgouz.com</authorUrl>
-	<version>2.5.1</version>
+	<version>2.5.2</version>
 	<description>CG_XML_DESCRIPTION</description>
 	<namespace path="src">ConseilGouz\Module\CGTemplateSwitcher</namespace>
 	<changelogurl>https://raw.githubusercontent.com/conseilgouz/pkg_cg_template_switcher_j4/master/cg_template_switcher_changelog.xml</changelogurl>
@@ -36,7 +36,7 @@
 		<fieldset name="basic" 
 			addruleprefix="ConseilGouz\Module\CGTemplateSwitcher\Site\Rule" 
 			addrulepath="/modules/mod_cg_template_switcher/src/Rule"
-            addfieldprefix="ConseilGouz\Module\CGTemplateSwitcher\Site\Field"
+            addfieldprefix="ConseilGouz\Library\Field"
 			>
             <field name="version" type="version"  margintop="-3em" extension="mod_cg_template_switcher"/>
 			<field name="templatesall" 	type="radio" class="btn-group btn-group-yesno"	default="true" 

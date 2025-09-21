@@ -2,12 +2,12 @@
 <extension type="plugin" version="4.0" group="fields" method="upgrade">
 	<name>plg_fields_cgtemplateswitcher</name>
 	<author>ConseilGouz</author>
-	<creationDate>2025-08-25</creationDate>
+	<creationDate>2025-09-21</creationDate>
 	<copyright>Copyright (C) 2025 ConseilGouz. All rights reserved.</copyright>
 	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
 	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
 	<authorUrl>www.conseilgouz.com</authorUrl>
-	<version>2.5.1</version>
+	<version>2.5.2</version>
 	<description>PLG_FIELDS_CGTEMPLATESWITCHER_XML_DESC</description>
 	<namespace path="src">ConseilGouz\Plugin\Fields\Cgtemplateswitcher</namespace>
     <scriptfile>script.php</scriptfile>
@@ -30,8 +30,8 @@
 	</languages>
 	<config>
 		<fields name="params">
-			<fieldset name="basic" addfieldprefix="ConseilGouz\Plugin\Fields\Cgtemplateswitcher\Field">
-				<field name="version" type="version" extension="cgtemplateswitcher" margintop="-3em"/>
+			<fieldset name="basic" addfieldprefix="ConseilGouz\Library\Field">
+				<field name="version" type="version" extension="plugin/cgtemplateswitcher" margintop="-3em"/>
 			</fieldset>
 		</fields>
 	</config>

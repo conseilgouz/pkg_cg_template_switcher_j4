@@ -63,11 +63,7 @@ $document->addScriptOptions(
           'userid'      => $user->id
           )
 );
-if ((bool)$app->getConfig()->get('debug')) { // Mode debug
-    $document->addScript(''.URI::base(true).'/media/mod_cg_template_switcher/js/init.js');
-} else {
-    $wa->registerAndUseScript('cgtemplateswitcher'.$module->id, $modulefield.'js/init.js');
-}
+$wa->registerAndUseScript('cgtemplateswitcher'.$module->id, $modulefield.'js/init.js');
 
 if (empty($templates->options)) { ?>
 	<form style="border:none" action="#">

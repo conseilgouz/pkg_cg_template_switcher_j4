@@ -2,12 +2,12 @@
 <extension version="4.0" type="plugin" group="system" method="upgrade">
 	<name>plg_system_cgstyle</name>
 	<author>ConseilGouz</author>
-	<creationDate>2025-08-25</creationDate>
+	<creationDate>2025-09-21</creationDate>
 	<copyright>(C)2025 ConseilGouz. All rights reserved.</copyright>
 	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
 	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
 	<authorUrl>www.conseilgouz.com</authorUrl>
-	<version>2.5.1</version>
+	<version>2.5.2</version>
 	<description>PLG_SYSTEM_CGSTYLE_XML_DESCRIPTION</description>
     <namespace path="src">Conseilgouz\Plugin\System\Cgstyle</namespace>
 	<files>
@@ -24,10 +24,10 @@
 	</languages>
 	<config>
        <fields name="params" >
-            <fieldset name="basic" addfieldprefix="Conseilgouz\Plugin\System\Cgstyle\Field">
-				<field name="version" type="version" extension="cgstyle" margintop="-3em" />
+            <fieldset name="basic" addfieldprefix="ConseilGouz\Library\Field">
+				<field name="version" type="version" extension="plugin/cgstyle" margintop="-3em" />
 				<field name="customcss" type="textarea" label="CGTS_CSS" description="CGTS_CSS_DESC" cols="200" rows="4" filter="raw" 
-					default=""			
+					default=""
 				/>	
                 
 			</fieldset>
