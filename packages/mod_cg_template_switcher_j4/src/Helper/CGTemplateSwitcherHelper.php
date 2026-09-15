@@ -11,7 +11,9 @@ namespace ConseilGouz\Module\CGTemplateSwitcher\Site\Helper;
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Component\Fields\Administrator\Model\FieldModel;
@@ -94,11 +96,16 @@ class CGTemplateSwitcherHelper
     // ==============================================    AJAX Request 	============================================================
     public static function getAjax()
     {
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
         $input = Factory::getApplication()->getInput()->request;
-        $userid = $input->getInt('user');
+        // $userid = $input->getInt('user');
         $tmpl = $input->getInt('tmpl');
         $color = $input->getRaw('color');
-        $user = Factory::getApplication()->getIdentity($userid);
+        $user = Factory::getApplication()->getIdentity();
+        if ($user->guest) {
+            Text::_('JINVALID_USER');
+        }
         $test = FieldsHelper::getFields('com_users.user', $user);
         $template_id = 0;
         $field_id = 0;
@@ -115,14 +122,14 @@ class CGTemplateSwitcherHelper
         if (($template_id) && ($template_id != $tmpl)) {
             // need to update template switcher field value
             $fieldmodel = new FieldModel(array('ignore_request' => true));
-            $fieldmodel->setFieldValue($field_id, $userid, $tmpl);
+            $fieldmodel->setFieldValue($field_id, $user->id, $tmpl);
         }
         if ($color_id) {
             $fieldmodel = new FieldModel(array('ignore_request' => true));
             if ($color == 0) {
-                $fieldmodel->setFieldValue($color_id, $userid, 'no');
+                $fieldmodel->setFieldValue($color_id, $user->id, 'no');
             } else {
-                $fieldmodel->setFieldValue($color_id, $userid, 'yes');
+                $fieldmodel->setFieldValue($color_id, $user->id, 'yes');
             }
         }
 

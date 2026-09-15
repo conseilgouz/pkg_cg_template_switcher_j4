@@ -2,12 +2,12 @@
 <extension type="plugin" version="4.0" group="fields" method="upgrade">
 	<name>plg_fields_cgtscolor</name>
 	<author>ConseilGouz</author>
-	<creationDate>2025-09-21</creationDate>
-	<copyright>Copyright (C) 2025 ConseilGouz. All rights reserved.</copyright>
+	<creationDate>2026-09-15</creationDate>
+	<copyright>Copyright (C) 2026 ConseilGouz. All rights reserved.</copyright>
 	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
 	<authorEmail>pascal.leconte@conseilgouz.com</authorEmail>
 	<authorUrl>www.conseilgouz.com</authorUrl>
-	<version>2.5.3</version>
+	<version>2.5.4</version>
 	<description>PLG_FIELDS_CGTSCOLOR_XML_DESC</description>
 	<namespace path="src">ConseilGouz\Plugin\Fields\Cgtscolor</namespace>
     <scriptfile>script.php</scriptfile>

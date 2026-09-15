@@ -193,7 +193,7 @@ function CG_TS_Cookie(id,b) {
         }
     }
     if (cgswitchmod[id].userid) { 
-        url = '?option=com_ajax&module=cg_template_switcher&user='+ cgswitchmod[id].userid+'&tmpl='+b+'&color='+color+'&format=json';
+        url = '?option=com_ajax&module=cg_template_switcher&tmpl='+b+'&color='+color+'&format=json';
         Joomla.request({
 			method : 'POST',
 			url : url,

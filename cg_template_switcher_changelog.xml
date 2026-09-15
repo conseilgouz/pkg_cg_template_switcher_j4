@@ -2,6 +2,18 @@
 	<changelog>
 		<element>pkg_cg_template_switcher</element>
 		<type>package</type>
+		<version>2.5.4</version>
+        <note>
+            <item>Update : 15/09/2026</item>
+        </note>
+        <fix>
+            <item>Increase security on ajax call : checktoken, no need to send userid</item>
+            <item>Use ConseilGouz Library 1.1.4</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>pkg_cg_template_switcher</element>
+		<type>package</type>
 		<version>2.5.3</version>
         <note>
             <item>Update : 21/09/2025</item>
